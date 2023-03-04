@@ -183,6 +183,7 @@ def value_exponential_fuction(a,b,x):
 # kryterium zatrzymania algorytmu: 
 #   a) spełnienie warunku nałożonego na dokładność [|x(i) − x(i−1)| < ε]
 #   b) osiągnięcie zadanej liczby iteracji. 
+#
 # Następnie użytkownik wprowadza ε (w przypadku wybrania pierwszego kryterium) lub 
 #  liczbę iteracji (w przypadku wyboru drugiego kryterium). 
 #
@@ -197,7 +198,15 @@ def value_exponential_fuction(a,b,x):
 # Wielomian
 # W(x) = 1x^4 + 1x^3 + 1x^2 + 1x + 1 
 
+# Note! float in python is same as C double type !
 
+# TEXTS
+text_section_begin: str = "Podaj wartość reprezentującą początek przedziału: "
+text_section_end: str = "Podaj wartość reprezentującą początek przedziału: "
+text_select_criterion: str = "Wybierz kryterium: (1.Spełnienie warunku epsilon  2.Liczba Iteracji )"
+
+# Check if it is correct math!!! and comment through
+#  schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def calc_polynomial_function(polynomial: List[int], x_value: int) -> int:
     polynomial_degree: int = len(polynomial)
     result: int = 0
@@ -212,10 +221,11 @@ def calc_polynomial_function(polynomial: List[int], x_value: int) -> int:
         result += sum
     return result
 
-polynomial_values: List[int]
-input_number: int = 0
+def polynomial_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+    polynomial_values: List[int]
+    input_number: int = 0
 
-def main():
+    # INPUT POLYNOMIAL 
 
     print("Wprowadz stopien wilomianu: ")
     input_number = int(input())             # get polygonal rank - length of the array.
@@ -229,50 +239,93 @@ def main():
     # Get x value
     print("Wprowadz wartosc x: ")
     input_number = int(input())
+
+    # CALCULATE POLYNOMIAL
+
     result = calc_polynomial_function(polynomial_values, input_number)
     print("Wynik wynosi: " + str(result))
 
+    pass
+
+def trigonometric_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+    pass
+
+def exponensial_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+    pass
+
+def combination_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+    pass
+
+def polynomial_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+    pass
+
+def trigonometric_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+    pass
+
+def exponensial_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+    pass
+
+def combination_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+    pass
+
+def main():
+
+    # 1. Wybór funkcji 
+    # 2. Wybiera przedział A-B
+    # 3. Wybiera kryterium a, b
+
+    section_start: float = 0
+    section_end: float = 0
+    function_type: int = 0
+    
+    function_type = int(input("Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "))
+    match function_type:
+        case 1:
+            print("Wybrano funckje typu wielomian.")
+        case 2:
+            print("Wybrano funckje typu trygonometryczna.")
+        case 3:
+            print("Wybrano funckje typu wykładnicza.")
+        case 4:
+            print("Wybrano funckje typu złożona.")
+        case other:
+            return
+
+    section_start = float(input(text_section_begin))
+    section_end = float(input(text_section_end))
+    selected_criterion = int(input(text_select_criterion))
+
+    if selected_criterion == 1:
+        print("Wybrano kryterium [ |x(i) − x(i−1)| < ε ]")
+        epsilon: float = 0
+        epsilon = float(input("Wprowadź wartość epsilon: "))
+
+        match function_type:
+            case 1:
+                polynomial_epsilon_search(section_start, section_end, epsilon)
+            case 2:
+                trigonometric_epsilon_search(section_start, section_end, epsilon)
+            case 3:
+                exponensial_epsilon_search(section_start, section_end, epsilon)
+            case 4:
+                combination_epsilon_search(section_start, section_end, epsilon)
+
+    elif selected_criterion == 2:
+        print("Wybrano kryterium [ liczba iteracji ]")
+        iteration_number: int = 0
+        iteration_number = int(input("Wprowadź liczbę iteracji: "))
+
+        match function_type:
+            case 1:
+                polynomial_iteration_search(section_start, section_end, iteration_number)
+            case 2:
+                trigonometric_iteration_search(section_start, section_end, iteration_number)
+            case 3:
+                exponensial_iteration_search(section_start, section_end, iteration_number)
+            case 4:
+                combination_iteration_search(section_start, section_end, iteration_number)
+
     input_number = input()
-
-    #with open('dane/data.csv', mode='r') as file:
-    #    lines = csv.reader(file, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
-    #    licz_stosa = 0
-    #    licz_versicolor = 0
-    #    licz_virginica = 0
-    #    tab_stosa = []
-    #    tab_versicolor = []
-    #    tab_virginica = []
-    #    for line in lines:
-    #        kwiat = Kwiat()
-    #        kwiat.sepal_length = line[0]
-    #        kwiat.sepal_width = line[1]
-    #        kwiat.petal_length = line[2]
-    #        kwiat.petal_width = line[3]
-    #        if line[4] == 0:
-    #            print("setosa")
-    #            tab_stosa.append(kwiat)
-    #            licz_stosa = licz_stosa + 1
-    #            tab_stosa[licz_stosa - 1].print_stat()
-    #        elif line[4] == 1:
-    #            print("versicolor")
-    #            tab_versicolor.append(kwiat)
-    #            licz_versicolor = licz_versicolor + 1
-    #            tab_versicolor[licz_versicolor - 1].print_stat()
-    #        elif line[4] == 2:
-    #            print("virginica")
-    #            tab_virginica.append(kwiat)
-    #            licz_virginica = licz_virginica + 1
-    #        else:
-    #            print("Wrong data")
-    #    liczebnosc = licz_stosa + licz_versicolor + licz_virginica
-    #    tab1("setosa", licz_stosa, liczebnosc)
-    #    tab1("versicolor", licz_versicolor, liczebnosc)
-    #    tab1("virginica", licz_virginica, liczebnosc)
-    #    tab1("Razem",liczebnosc,liczebnosc)
-    #    tab2(tab_stosa, tab_versicolor, tab_virginica, liczebnosc)
-    #    wykresy(tab_stosa, tab_versicolor, tab_virginica)
-    #    wyk_pudelkowy(tab_stosa, tab_versicolor, tab_virginica)
-
 
 if __name__ == '__main__':
     main()
