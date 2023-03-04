@@ -171,6 +171,50 @@ def value_exponential_fuction(a,b,x):
     e = numpy.e
     return a*(e**(b*x))
 
+def mabs(x):
+    if x<0:
+        return x(-1)
+    else :
+        return x
+
+def factorial(x):
+    value = 1
+    for i in x:
+        value = value * i
+    return value
+
+def sin(x):
+    x = x(numpy.pi/180)
+    sin_x = x
+    power = x
+    deno = 1
+    minus = -1
+    while mabs(power/factorial(deno)) >= 0.00001:
+        power = power * x * x
+        deno = deno + 2
+        sin_x += (-1) * power / factorial(deno)
+        minus = minus * (-1)
+    return sin_x
+
+def cos(x):
+    x = x * (numpy.pi / 180)
+    cos_x = 1
+    power = x * x
+    deno = 2
+    minus = -1
+    while mabs(power/factorial(deno)) >= 0.00001:
+        cos_x += minus * power / factorial(deno)
+        power = power * x * x
+        deno = deno+2
+        minus = minus + (-1)
+    return cos_x
+
+def tan(x):
+    return sin(x)/cos(x)
+
+def ctg(x):
+    return cos(x)/sin(x)
+
 # Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania 
 #  (znajdowania miejsca zerowego) równań nieliniowych. 
 # Implementacja Metody Bisekcji oraz Metoda Stycznych.
@@ -216,25 +260,24 @@ def bisection_method_recurent(polynomial_values: List[int], section_start: float
         return
     else:
         result_start: float = calc_polynomial_function(polynomial_values, section_start)
-        result_end: float = calc_polynomial_function(polynomial_values, section_end)
+        #result_end: float = calc_polynomial_function(polynomial_values, section_end)
 
-        #print(str(result_start ^ result_end))
         # Sprawdzenie czy znak jest taki sam.
-        #if (result_start ^ result_end) >= 0:
+        if result_start >= 0 and mid_result >= 0 or result_start < 0 and mid_result < 0 :
             # [c, b]
-        print("+, " + str(result_start) + ", " + str(result_end))
-        #    bisection_method_recurent(polynomial_values, section_mid, section_end)
-        #else:
-        #    # [a, c]
-        print("-, " + str(result_start) + ", " + str(result_end))
-        #    bisection_method_recurent(polynomial_values, section_start, section_mid)
+            print("+, " + str(result_start) + ", " + str(mid_result))
+            bisection_method_recurent(polynomial_values, section_mid, section_end)
+        else:
+            # [a, c]
+            print("-, " + str(result_start) + ", " + str(mid_result))
+            bisection_method_recurent(polynomial_values, section_start, section_mid)
 
 # Check if it is correct math!!! and comment through
 #  użyj schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def calc_polynomial_function(polynomial: List[int], x_value: int) -> int:
+def calc_polynomial_function(polynomial: List[int], x_value: float) -> float:
     polynomial_degree: int = len(polynomial)
-    result: int = 0
-    sum: int = 0
+    result: float = 0
+    sum: float = 0
 
     for i in range(0, polynomial_degree):
         sum = polynomial[i]
