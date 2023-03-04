@@ -203,10 +203,34 @@ def value_exponential_fuction(a,b,x):
 # TEXTS
 text_section_begin: str = "Podaj wartość reprezentującą początek przedziału: "
 text_section_end: str = "Podaj wartość reprezentującą początek przedziału: "
-text_select_criterion: str = "Wybierz kryterium: (1.Spełnienie warunku epsilon  2.Liczba Iteracji )"
+text_select_criterion: str = "Wybierz kryterium (1.Spełnienie warunku epsilon  2.Liczba Iteracji): "
+text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
+
+
+def bisection_method_recurent(polynomial_values: List[int], section_start: float, section_end: float):
+    section_mid: float = (section_start + section_end) / 2
+    mid_result: float = calc_polynomial_function(polynomial_values, section_mid)
+
+    if mid_result == 0:
+        print("Wynik: x = " + str(section_mid) + " jest miejscem 0'wym.")
+        return
+    else:
+        result_start: float = calc_polynomial_function(polynomial_values, section_start)
+        result_end: float = calc_polynomial_function(polynomial_values, section_end)
+
+        #print(str(result_start ^ result_end))
+        # Sprawdzenie czy znak jest taki sam.
+        #if (result_start ^ result_end) >= 0:
+            # [c, b]
+        print("+, " + str(result_start) + ", " + str(result_end))
+        #    bisection_method_recurent(polynomial_values, section_mid, section_end)
+        #else:
+        #    # [a, c]
+        print("-, " + str(result_start) + ", " + str(result_end))
+        #    bisection_method_recurent(polynomial_values, section_start, section_mid)
 
 # Check if it is correct math!!! and comment through
-#  schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#  użyj schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def calc_polynomial_function(polynomial: List[int], x_value: int) -> int:
     polynomial_degree: int = len(polynomial)
     result: int = 0
@@ -227,9 +251,11 @@ def abs(x):
     else :
         return x
 
-def polynomial_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
     polynomial_values: List[int]
     input_number: int = 0
+
+    print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
 
     # INPUT POLYNOMIAL 
 
@@ -246,32 +272,32 @@ def polynomial_iteration_search(section_start: float, section_end: float, epsilo
     print("Wprowadz wartosc x: ")
     input_number = int(input())
 
+    # BISECTION METHOD
+    bisection_method_recurent(polynomial_values, section_start, section_end)
+
     # CALCULATE POLYNOMIAL
+    #result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
+    #print("Wynik wynosi: " + str(result))
 
-    result = calc_polynomial_function(polynomial_values, input_number)
-    print("Wynik wynosi: " + str(result))
-
+def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass
 
-def trigonometric_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass
 
-def exponensial_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass
 
-def combination_iteration_search(section_start: float, section_end: float, epsilon_value: float):
+def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
 
-def polynomial_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
 
-def trigonometric_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
 
-def exponensial_epsilon_search(section_start: float, section_end: float, iteration_number: int):
-    pass
-
-def combination_epsilon_search(section_start: float, section_end: float, iteration_number: int):
+def combination_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
 
 def main():
@@ -284,7 +310,7 @@ def main():
     section_end: float = 0
     function_type: int = 0
     
-    function_type = int(input("Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "))
+    function_type = int(input(text_select_function))
     match function_type:
         case 1:
             print("Wybrano funckje typu wielomian.")
@@ -301,7 +327,7 @@ def main():
     section_end = float(input(text_section_end))
     selected_criterion = int(input(text_select_criterion))
 
-    if selected_criterion == 1:
+    if selected_criterion == 1: # [ |x(i) − x(i−1)| < ε ]
         print("Wybrano kryterium [ |x(i) − x(i−1)| < ε ]")
         epsilon: float = 0
         epsilon = float(input("Wprowadź wartość epsilon: "))
@@ -316,8 +342,8 @@ def main():
             case 4:
                 combination_epsilon_search(section_start, section_end, epsilon)
 
-    elif selected_criterion == 2:
-        print("Wybrano kryterium [ liczba iteracji ]")
+    elif selected_criterion == 2: # Iteration
+        print("Wybrano kryterium [ Liczba iteracji ]")
         iteration_number: int = 0
         iteration_number = int(input("Wprowadź liczbę iteracji: "))
 
