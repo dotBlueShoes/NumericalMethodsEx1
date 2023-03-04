@@ -1,337 +1,207 @@
-# Program tworzący opisy położenia i zróżnicowania rozkładu empirycznego w postaci tabel
-#  na przykładzie klasycznego zbioru danych irysów. 
-# Mateusz Strumiłło 242539. Program napisany w języku python z użyciem dod. pakietów
-#		- cli-tables [ pip install cli-tables ] : do wyświetlenia tablic przy użyciu konsoli (moga się rozjeżdżać na mniejszych rozdzielczościach).
-
-from cli_tables.cli_tables import print_table
 import matplotlib.pyplot as plt
-import numpy as np
-import math
 import csv
+import numpy
+import statistics as st
 
-#region [ Classes ]
 
-class Iris:
-	def __init__(self, sepal_length: float, sepal_width: float, petal_length: float, petal_width: float):
-		self.sepal_length = sepal_length
-		self.petal_length = petal_length
-		self.sepal_width = sepal_width
-		self.petal_width = petal_width
-	
-	# UNUSED
-	#def print(self):
-	#	print(f'{self.sepal_length} {self.sepal_width} {self.petal_length} {self.petal_width}')
+class Kwiat:
+    sepal_length = float
+    sepal_width = float
+    petal_length = float
+    petal_width = float
 
-class Measures:
-	def __init__(self, numericValues: list[float]):
-		self.numericValues = numericValues
-		self.numericValues.sort()
+    def print_stat(self):
+        print(f"{self.sepal_length}; {self.sepal_width}; {self.petal_length}; {self.petal_width}")
 
-	def minimum(self) -> float:
-		return min(self.numericValues)
-	
-	def maximum(self) -> float:
-		return max(self.numericValues)
 
-	def arithmetic_averge(self) -> float:
-		return sum(self.numericValues) / len(self.numericValues)
+def tab1(nazwa: str, liczba: int, cala_liczba: int):
+    procent = round(liczba / cala_liczba * 100, 1)
+    print(f"{nazwa}: liczebność: {liczba}({procent}%)")
 
-	def median(self) -> float:
-		if (len(self.numericValues) % 2 == 0):
-			return (self.numericValues[int(len(self.numericValues) / 2) - 1] + self.numericValues[int(len(self.numericValues) / 2)]) / 2
-		else:
-			return self.numericValues[int((len(self.danumericValuesta_list) - 1) / 2 )] 
 
-	def standard_deviation(self) -> float:
-		avarge = self.arithmetic_averge()
-		deviation = 0
+def tab2(lista1, lista2, lista3, liczebnosc):
+    sepal_length = []
+    sepal_width = []
+    petal_length = []
+    petal_width = []
+    for kwiat in lista1:
+        sepal_length.append(kwiat.sepal_length)
+        sepal_width.append(kwiat.sepal_width)
+        petal_length.append(kwiat.petal_length)
+        petal_width.append(kwiat.petal_width)
+    for kwiat in lista2:
+        sepal_length.append(kwiat.sepal_length)
+        sepal_width.append(kwiat.sepal_width)
+        petal_length.append(kwiat.petal_length)
+        petal_width.append(kwiat.petal_width)
+    for kwiat in lista3:
+        sepal_length.append(kwiat.sepal_length)
+        sepal_width.append(kwiat.sepal_width)
+        petal_length.append(kwiat.petal_length)
+        petal_width.append(kwiat.petal_width)
 
-		for val in self.numericValues:
-			deviation += (val - avarge)**2
+    wyswietl("Długość działki kielicha (cm)", sepal_length, liczebnosc)
+    wyswietl("Szerokość działki kielicha (cm)", sepal_width, liczebnosc)
+    wyswietl("Długość płatka (cm)", petal_length, liczebnosc)
+    wyswietl("Szerokość płatka (cm)", petal_width, liczebnosc)
 
-		deviation /= len(self.numericValues)
-		deviation = math.sqrt(deviation)
-		return deviation
 
-	def quartile_first(self) -> float:
-		return self.numericValues[int((len(self.numericValues) - 1) / 4)]
+def wyswietl(nazwa, tab, licz):
+    print(
+        f"{nazwa}: Minimum:{min(tab)} średnia:{srednia(tab, licz)} (±{odchylenie(tab, licz)}) Mediana:{round(st.median(tab), 2)} ({kwartyl_dolny(tab, licz)}-{kwartyl_gorny(tab, licz)}) Maksimum:{max(tab)}")
 
-	def quartile_last(self) -> float:
-		return self.numericValues[int(((len(self.numericValues) - 1) * 3) / 4)]
 
-#endregion
+def srednia(tablica, liczebnosc):
+    return round(sum(tablica) / liczebnosc, 2)
 
-#region [ Printing ]
 
-def display_sum_table(setosa_count: str, versicolor_count: str, virginica_count: str, whole_length: str) -> None:
-	print_table([
-		['Gatunek', 	'Liczebność (%)'],
-		['setosa', 		setosa_count	],
-		['versicolor', 	versicolor_count],
-		['virginica', 	virginica_count	],
-		['Razem', 		whole_length	],
-	])
+def odchylenie(tablica, liczebnosc):
+    suma = 0
+    for wartosc in tablica:
+        suma = suma + (wartosc - srednia(tablica, liczebnosc)) ** 2
+    return round(numpy.sqrt(suma / liczebnosc), 2)
 
-def display_table(
-	sepal_lengths_measures: Measures, 
-	sepal_widths_measures: Measures, 
-	petal_lengths_measures: Measures, 
-	petal_widths_measures: Measures
-) -> None:
-	print_table([
-		['Cecha', 'Minimum', 'Śr. arytm. (±odchy.stand.)', 'Mediana (Q1 - Q3)', 'Maksimum'],
 
-		[
-			'Długość działki kielicha (cm)',
-			str(sepal_lengths_measures.minimum()), 
-			'{} (±{})'.format(
-       			round(sepal_lengths_measures.arithmetic_averge(),	2),
-          		round(sepal_lengths_measures.standard_deviation(),	2)
-            ),
-			'{} ({} - {})'.format(
-       			sepal_lengths_measures.median(),
-          		sepal_lengths_measures.quartile_first(), 
-            	sepal_lengths_measures.quartile_last()
-            ), 
-			str(sepal_lengths_measures.maximum())
-		],
+def kwartyl_dolny(tablica, liczenosc):
+    tablica.sort()
+    return tablica[int((liczenosc - 1) / 4)]
 
-		[
-			'Szerokość działki kielicha (cm)',
-			str(sepal_widths_measures.minimum()), 
-			'{} (±{})'.format(
-       			round(sepal_widths_measures.arithmetic_averge(),	2),
-          		round(sepal_widths_measures.standard_deviation(),	2)
-            ), 
-			'{} ({} - {})'.format(	
-                sepal_widths_measures.median(),
-                sepal_widths_measures.quartile_first(),
-                sepal_widths_measures.quartile_last()
-            ), 
-			str(sepal_widths_measures.maximum())
-		],
 
-		[
-			'Długość Płatka (cm)',
-			str(petal_lengths_measures.minimum()), 
-			'{} (±{})'.format(
-       			round(petal_lengths_measures.arithmetic_averge(),	2),
-          		round(petal_lengths_measures.standard_deviation(),	2)
-            ), 
-			'{} ({} - {})'.format(
-       			petal_lengths_measures.median(), 
-                petal_lengths_measures.quartile_first(),
-                petal_lengths_measures.quartile_last()
-            ), 
-			str(petal_lengths_measures.maximum())
-		],
+def kwartyl_gorny(tablica, liczenosc):
+    tablica.sort()
+    return tablica[int(((liczenosc - 1) * 3) / 4)]
 
-		[
-			'Szerokość płatka (cm)',
-			str(petal_widths_measures.minimum()), 
-			'{} (±{})'.format(
-       			round(petal_widths_measures.arithmetic_averge(),	2),
-          		round(petal_widths_measures.standard_deviation(),	2)
-            ), 
-			'{} ({} - {})'.format(
-       			petal_widths_measures.median(),
-          		petal_widths_measures.quartile_first(),
-            	petal_widths_measures.quartile_last()
-            ), 
-			str(petal_widths_measures.maximum())
-		]
-	])
 
-#endregion
+def wykresy(lista1, lista2, lista3):
+    sepal_length = []
+    sepal_width = []
+    petal_length = []
+    petal_width = []
+    for kwiat in lista1:
+        sepal_length.append(kwiat.sepal_length)
+        sepal_width.append(kwiat.sepal_width)
+        petal_length.append(kwiat.petal_length)
+        petal_width.append(kwiat.petal_width)
+    for kwiat in lista2:
+        sepal_length.append(kwiat.sepal_length)
+        sepal_width.append(kwiat.sepal_width)
+        petal_length.append(kwiat.petal_length)
+        petal_width.append(kwiat.petal_width)
+    for kwiat in lista3:
+        sepal_length.append(kwiat.sepal_length)
+        sepal_width.append(kwiat.sepal_width)
+        petal_length.append(kwiat.petal_length)
+        petal_width.append(kwiat.petal_width)
+    histogram("Długość działki kielicha", sepal_length)
+    histogram("Szerokość działki kielicha", sepal_width)
+    histogram("Długość płatka", petal_length)
+    histogram("Szerokość płatka", petal_width)
 
-#region [ Plotting ]
 
-def box_plot(title: str, window_title: str, iris_type = [Iris]):
+def histogram(nazwa, tab):
+    nniz = 0
+    if (min(tab) < int(min(tab)) + 0.5):
+        nniz = int(min(tab))
+    else:
+        nniz = int(min(tab)) + 0.5
+    nmaks = 0
+    if (max(tab) < int(max(tab)) + 0.5):
+        nmaks = int(max(tab)) + 1
+    else:
+        nmaks = int(max(tab)) + 1.5
 
-	sepal_lengths 	= [iris.sepal_length for iris in iris_type]
-	sepal_widths 	= [iris.sepal_width for iris in iris_type]
-	petal_lengths 	= [iris.petal_length for iris in iris_type]
-	petal_widths 	= [iris.petal_width for iris in iris_type]
+    bins = numpy.arange(nniz, nmaks, 0.5)
+    plt.hist(tab, bins=bins, edgecolor='black')
+    plt.title(nazwa)
+    plt.ylabel("Liczebność")
+    plt.xlabel("Długość (cm)")
+    plt.show()
 
-	labels = ['sepal_lengths', 'sepal_widths', 'petal_lengths', 'petal_widths']
-	data = [sepal_lengths, sepal_widths, petal_lengths, petal_widths]
 
-	fig = plt.figure(figsize = (16, 9), dpi = 70)
-	fig.canvas.manager.set_window_title(window_title)
-	
-	plot = plt.boxplot(data, patch_artist=True, labels = labels)
-	plt.title(title)
+def wyk_pudelkowy(lista1, lista2, lista3):
+    sepal_length_s = []
+    sepal_length_ve = []
+    sepal_length_vi = []
 
-	colors = ['pink', 'lightblue', 'lightgreen', 'tan']
-	for patch, color in zip(plot['boxes'], colors):
-		patch.set_facecolor(color)
+    sepal_width_s = []
+    sepal_width_ve = []
+    sepal_width_vi = []
 
-	plt.show()
+    petal_length_s = []
+    petal_length_ve = []
+    petal_length_vi = []
 
-def hist_plot(window_title: str, setosas = [Iris], versicolors = [Iris], virginicas = [Iris]):
-
-	labels = ['Setosa', 'Versicolor', 'Virginica']
-	colors = ['lightblue', 'yellow', 'red']
-
-	fig = plt.figure(figsize = (16, 9), dpi = 70)
-	fig.canvas.manager.set_window_title(window_title)
-
-	# SEPAL LENGTHS
-	lengths = np.transpose(np.array([
-		[iris.sepal_length for iris in setosas], 
-		[iris.sepal_length for iris in versicolors], 
-		[iris.sepal_length for iris in virginicas]
-	]))
-
-	bins = int(len(lengths) / 2)
-
-	ax = plt.subplot(2, 2, 1)
-	ax.hist(
-		lengths, bins = bins, histtype = 'bar', stacked = False, 
-		fill = True, label = labels, color = colors, edgecolor = "k"
-	)
-
-	ax.set_title('Histogram długości działki kielicha')
-	ax.set_xlabel('Długość działki kielicha')
-	ax.set_ylabel('Ilość')
-	ax.grid(True)
-	ax.legend()
-
-	# SEPAL WIDTHS
-	lengths = np.transpose(np.array([
-		[iris.sepal_width for iris in setosas], 
-		[iris.sepal_width for iris in versicolors], 
-		[iris.sepal_width for iris in virginicas]
-	]))
-
-	bins = int(len(lengths) / 2)
-
-	ax = plt.subplot(2, 2, 2)
-	ax.hist(
-		lengths, bins = bins, histtype = 'bar', stacked = False, 
-		fill = True, label = labels, color = colors, edgecolor = "k"
-	)
-
-	ax.set_title('Histogram szerokości działki kielicha')
-	ax.set_xlabel('Szerokość działki kielicha')
-	ax.set_ylabel('Ilość')
-	ax.grid(True)
-	ax.legend()
-
-	# PETAL LENGTHS
-	lengths = np.transpose(np.array([
-		[iris.petal_length for iris in setosas], 
-		[iris.petal_length for iris in versicolors], 
-		[iris.petal_length for iris in virginicas]
-	]))
-
-	bins = int(len(lengths) / 2)
-
-	ax = plt.subplot(2, 2, 3)
-	ax.hist(
-		lengths, bins = bins, histtype = 'bar', stacked = False, 
-		fill = True, label = labels, color = colors, edgecolor = "k"
-	)
-
-	ax.set_title('Histogram długośći działki płatka')
-	ax.set_xlabel('Długość działki płatka')
-	ax.set_ylabel('Ilość')
-	ax.grid(True)
-	ax.legend()
-
-	# PETAL WIDTHS
-	lengths = np.transpose(np.array([
-		[iris.petal_width for iris in setosas], 
-		[iris.petal_width for iris in versicolors], 
-		[iris.petal_width for iris in virginicas]
-	]))
-
-	bins = int(len(lengths) / 2)
-
-	ax = plt.subplot(2, 2, 4)
-	ax.hist(
-		lengths, bins = bins, histtype = 'bar', stacked = False, 
-		fill = True, label = labels, color = colors, edgecolor = "k"
-	)
-
-	ax.set_title('Histogram szerokości działki płatka')
-	ax.set_xlabel('Szerokość działki płatka')
-	ax.set_ylabel('Ilość')
-	ax.grid(True)
-	ax.legend()
-
-	plt.show()
-
-#endregion
-
-def display_iris_measures(iris_type_name: str, iris_type = []):
-	sepal_lengths 	= Measures([iris.sepal_length for iris in iris_type])
-	sepal_widths 	= Measures([iris.sepal_width for iris in iris_type])
-	petal_lengths 	= Measures([iris.petal_length for iris in iris_type])
-	petal_widths 	= Measures([iris.petal_width for iris in iris_type])
-
-	print(iris_type_name)
-	display_table(
-		sepal_lengths, 
-		sepal_widths, 
-		petal_lengths, 
-		petal_widths
-	)
+    petal_width_s = []
+    petal_width_ve = []
+    petal_width_vi = []
+    for kwiat in lista1:
+        sepal_length_s.append(kwiat.sepal_length)
+        sepal_width_s.append(kwiat.sepal_width)
+        petal_length_s.append(kwiat.petal_length)
+        petal_width_s.append(kwiat.petal_width)
+    for kwiat in lista2:
+        sepal_length_ve.append(kwiat.sepal_length)
+        sepal_width_ve.append(kwiat.sepal_width)
+        petal_length_ve.append(kwiat.petal_length)
+        petal_width_ve.append(kwiat.petal_width)
+    for kwiat in lista3:
+        sepal_length_vi.append(kwiat.sepal_length)
+        sepal_width_vi.append(kwiat.sepal_width)
+        petal_length_vi.append(kwiat.petal_length)
+        petal_width_vi.append(kwiat.petal_width)
+    plt.boxplot([sepal_length_s, sepal_length_ve, sepal_length_vi], labels=['setosa', 'versicolor', 'virginica'])
+    plt.ylabel('Długość (cm)')
+    plt.show()
+    plt.boxplot([sepal_width_s, sepal_width_ve, sepal_width_vi], labels=['setosa', 'versicolor', 'virginica'])
+    plt.ylabel('Szerokość (cm)')
+    plt.show()
+    plt.boxplot([petal_length_s, petal_length_ve, petal_length_vi], labels=['setosa', 'versicolor', 'virginica'])
+    plt.ylabel('Długość (cm)')
+    plt.show()
+    plt.boxplot([petal_width_s, petal_width_ve, petal_width_vi], labels=['setosa', 'versicolor', 'virginica'])
+    plt.ylabel('Szerokość (cm)')
+    plt.show()
 
 def main():
-
-	# Path to the file that contains the data.
-	data_path = 'dane/data.csv'
-
-	# Creating the lists needed to contain read data.
-	versicolors, setosas, virginicas = [], [], []
-
-	# Opening the csv file using with and special csv class.
-	with open(data_path, 'r') as csvfile:
-		rows = csv.reader(csvfile, delimiter = ',', quoting = csv.QUOTE_NONNUMERIC)
-
-		for row in rows:
-			if row[-1] == 0:											# Setosa
-				setosas.append(Iris(row[0], row[1], row[2], row[3]))
-			elif row[-1] == 1: 											# Versicolor
-				versicolors.append(Iris(row[0], row[1], row[2], row[3]))
-			elif row[-1] == 2: 											# virginica
-				virginicas.append(Iris(row[0], row[1], row[2], row[3]))
-
-		# Getting the lengths
-		versicolors_length = len(versicolors)
-		virginicas_length = len(virginicas)
-		setosas_length = len(setosas)
-		whole_length = versicolors_length + virginicas_length + setosas_length
-
-		# Measures
-		if (whole_length != 0):
-			versicolors_percentage_length = versicolors_length / whole_length
-			virginicas_percentage_length = virginicas_length / whole_length
-			setosas_percentage_length = setosas_length / whole_length
-
-		# Printing
-		print('\n')
-		display_sum_table( 
-			'{} ({}%)'.format(setosas_length, round(setosas_percentage_length, 2)),
-			'{} ({}%)'.format(versicolors_length, round(versicolors_percentage_length, 2)),
-			'{} ({}%)'.format(virginicas_length, round(virginicas_percentage_length, 2)),
-			'{} (100%)'.format(whole_length)
-		)
-
-		display_iris_measures("Setosa", setosas)
-		display_iris_measures("Versicolors", versicolors)
-		display_iris_measures("Virginicas", virginicas)
-		display_iris_measures("Wszystkie", setosas + versicolors + virginicas)
-		print('\n')
-
-		# Plotting
-		box_plot("Setosa", data_path, setosas)
-		box_plot("Versicolors", data_path, versicolors)
-		box_plot("Virginicas", data_path, virginicas)
-		box_plot("Wszystkie", data_path, setosas + versicolors + virginicas)
-		hist_plot(data_path, setosas, versicolors, virginicas)
+    with open('data.csv', mode='r') as file:
+        lines = csv.reader(file, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
+        licz_stosa = 0
+        licz_versicolor = 0
+        licz_virginica = 0
+        tab_stosa = []
+        tab_versicolor = []
+        tab_virginica = []
+        for line in lines:
+            kwiat = Kwiat()
+            kwiat.sepal_length = line[0]
+            kwiat.sepal_width = line[1]
+            kwiat.petal_length = line[2]
+            kwiat.petal_width = line[3]
+            if line[4] == 0:
+                print("setosa")
+                tab_stosa.append(kwiat)
+                licz_stosa = licz_stosa + 1
+                tab_stosa[licz_stosa - 1].print_stat()
+            elif line[4] == 1:
+                print("versicolor")
+                tab_versicolor.append(kwiat)
+                licz_versicolor = licz_versicolor + 1
+                tab_versicolor[licz_versicolor - 1].print_stat()
+            elif line[4] == 2:
+                print("virginica")
+                tab_virginica.append(kwiat)
+                licz_virginica = licz_virginica + 1
+            else:
+                print("Wrong data")
+        liczebnosc = licz_stosa + licz_versicolor + licz_virginica
+        tab1("setosa", licz_stosa, liczebnosc)
+        tab1("versicolor", licz_versicolor, liczebnosc)
+        tab1("virginica", licz_virginica, liczebnosc)
+        tab1("Razem",liczebnosc,liczebnosc)
+        tab2(tab_stosa, tab_versicolor, tab_virginica, liczebnosc)
+        wykresy(tab_stosa, tab_versicolor, tab_virginica)
+        wyk_pudelkowy(tab_stosa, tab_versicolor, tab_virginica)
 
 
-if __name__ == "__main__":
-	main()
+if __name__ == '__main__':
+    main()
