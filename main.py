@@ -221,6 +221,12 @@ def calc_polynomial_function(polynomial: List[int], x_value: int) -> int:
         result += sum
     return result
 
+def abs(x):
+    if x<0:
+        return x*(-1)
+    else :
+        return x
+
 def polynomial_iteration_search(section_start: float, section_end: float, epsilon_value: float):
     polynomial_values: List[int]
     input_number: int = 0
