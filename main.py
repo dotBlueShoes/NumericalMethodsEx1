@@ -3,8 +3,7 @@ from typing import List
 import numpy
 import statistics as st
 
-
-class Kwiat:
+"""class Kwiat:
     sepal_length = float
     sepal_width = float
     petal_length = float
@@ -160,22 +159,26 @@ def wyk_pudelkowy(lista1, lista2, lista3):
     plt.show()
     plt.boxplot([petal_width_s, petal_width_ve, petal_width_vi], labels=['setosa', 'versicolor', 'virginica'])
     plt.ylabel('Szerokość (cm)')
-    plt.show()
+    plt.show()"""
+
 
 def exponential_fuction():
     print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
     a = input("Podaj wartość a:")
     b = input("Podaj wartość b:")
 
-def value_exponential_fuction(a,b,x):
+
+def value_exponential_fuction(a, b, x):
     e = numpy.e
-    return a*(e**(b*x))
+    return a * (e ** (b * x))
+
 
 def mabs(x):
-    if x<0:
-        return x(-1)
-    else :
+    if x < 0:
+        return x*(-1)
+    else:
         return x
+
 
 def factorial(x):
     value = 1
@@ -183,18 +186,20 @@ def factorial(x):
         value = value * i
     return value
 
+
 def sin(x):
-    x = x(numpy.pi/180)
+    x = x(numpy.pi / 180)
     sin_x = x
     power = x
     deno = 1
     minus = -1
-    while mabs(power/factorial(deno)) >= 0.00001:
+    while mabs(power / factorial(deno)) >= 0.00001:
         power = power * x * x
         deno = deno + 2
         sin_x += (-1) * power / factorial(deno)
         minus = minus * (-1)
     return sin_x
+
 
 def cos(x):
     x = x * (numpy.pi / 180)
@@ -202,20 +207,23 @@ def cos(x):
     power = x * x
     deno = 2
     minus = -1
-    while mabs(power/factorial(deno)) >= 0.00001:
+    while mabs(power / factorial(deno)) >= 0.00001:
         cos_x += minus * power / factorial(deno)
         power = power * x * x
-        deno = deno+2
+        deno = deno + 2
         minus = minus + (-1)
     return cos_x
 
+
 def tan(x):
-    return sin(x)/cos(x)
+    return sin(x) / cos(x)
+
 
 def ctg(x):
-    return cos(x)/sin(x)
+    return cos(x) / sin(x)
 
-# Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania 
+
+# Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania
 #  (znajdowania miejsca zerowego) równań nieliniowych. 
 # Implementacja Metody Bisekcji oraz Metoda Stycznych.
 #
@@ -260,10 +268,10 @@ def bisection_method_recurent(polynomial_values: List[int], section_start: float
         return
     else:
         result_start: float = calc_polynomial_function(polynomial_values, section_start)
-        #result_end: float = calc_polynomial_function(polynomial_values, section_end)
+        # result_end: float = calc_polynomial_function(polynomial_values, section_end)
 
         # Sprawdzenie czy znak jest taki sam.
-        if result_start >= 0 and mid_result >= 0 or result_start < 0 and mid_result < 0 :
+        if result_start >= 0 and mid_result >= 0 or result_start < 0 and mid_result < 0:
             # [c, b]
             print("+, " + str(result_start) + ", " + str(mid_result))
             bisection_method_recurent(polynomial_values, section_mid, section_end)
@@ -271,6 +279,7 @@ def bisection_method_recurent(polynomial_values: List[int], section_start: float
             # [a, c]
             print("-, " + str(result_start) + ", " + str(mid_result))
             bisection_method_recurent(polynomial_values, section_start, section_mid)
+
 
 # Check if it is correct math!!! and comment through
 #  użyj schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -288,11 +297,13 @@ def calc_polynomial_function(polynomial: List[int], x_value: float) -> float:
         result += sum
     return result
 
+
 def abs(x):
-    if x<0:
-        return x*(-1)
-    else :
+    if x < 0:
+        return x * (-1)
+    else:
         return x
+
 
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
     polynomial_values: List[int]
@@ -302,13 +313,13 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
 
     # INPUT POLYNOMIAL 
 
-    print("Wprowadz stopien wilomianu: ")
-    input_number = int(input())             # get polygonal rank - length of the array.
+    print("Wprowadz stopien wielomianu: ")
+    input_number = int(input())  # get polygonal rank - length of the array.
     polynomial_values = [0] * input_number  # initialize array with 0's.
 
     # Get a, b, c, d, ... values.
     for i in range(0, input_number):
-        print("Wprowadz wartosc " + str(i + 1) + " skladnika wilomianu: ")
+        print("Wprowadz wartosc " + str(i + 1) + " skladnika wielomianu: ")
         polynomial_values[i] = int(input())
 
     # Get x value
@@ -319,40 +330,47 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
     bisection_method_recurent(polynomial_values, section_start, section_end)
 
     # CALCULATE POLYNOMIAL
-    #result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
-    #print("Wynik wynosi: " + str(result))
+    # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
+    # print("Wynik wynosi: " + str(result))
+
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass
 
+
 def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass
+
 
 def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass
 
+
 def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
+
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
 
+
 def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
+
 
 def combination_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
 
-def main():
 
-    # 1. Wybór funkcji 
+def main():
+    # 1. Wybór funkcji
     # 2. Wybiera przedział A-B
     # 3. Wybiera kryterium a, b
 
     section_start: float = 0
     section_end: float = 0
     function_type: int = 0
-    
+
     function_type = int(input(text_select_function))
     match function_type:
         case 1:
@@ -370,7 +388,7 @@ def main():
     section_end = float(input(text_section_end))
     selected_criterion = int(input(text_select_criterion))
 
-    if selected_criterion == 1: # [ |x(i) − x(i−1)| < ε ]
+    if selected_criterion == 1:  # [ |x(i) − x(i−1)| < ε ]
         print("Wybrano kryterium [ |x(i) − x(i−1)| < ε ]")
         epsilon: float = 0
         epsilon = float(input("Wprowadź wartość epsilon: "))
@@ -385,7 +403,7 @@ def main():
             case 4:
                 combination_epsilon_search(section_start, section_end, epsilon)
 
-    elif selected_criterion == 2: # Iteration
+    elif selected_criterion == 2:  # Iteration
         print("Wybrano kryterium [ Liczba iteracji ]")
         iteration_number: int = 0
         iteration_number = int(input("Wprowadź liczbę iteracji: "))
@@ -401,6 +419,7 @@ def main():
                 combination_iteration_search(section_start, section_end, iteration_number)
 
     input_number = input()
+
 
 if __name__ == '__main__':
     main()
