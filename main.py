@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import math
 from typing import List
 import numpy
 import statistics as st
@@ -186,43 +187,6 @@ def factorial(x):
         value = value * i
     return value
 
-
-def sin(x):
-    x = x(numpy.pi / 180)
-    sin_x = x
-    power = x
-    deno = 1
-    minus = -1
-    while mabs(power / factorial(deno)) >= 0.00001:
-        power = power * x * x
-        deno = deno + 2
-        sin_x += (-1) * power / factorial(deno)
-        minus = minus * (-1)
-    return sin_x
-
-
-def cos(x):
-    x = x * (numpy.pi / 180)
-    cos_x = 1
-    power = x * x
-    deno = 2
-    minus = -1
-    while mabs(power / factorial(deno)) >= 0.00001:
-        cos_x += minus * power / factorial(deno)
-        power = power * x * x
-        deno = deno + 2
-        minus = minus + (-1)
-    return cos_x
-
-
-def tan(x):
-    return sin(x) / cos(x)
-
-
-def ctg(x):
-    return cos(x) / sin(x)
-
-
 # Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania
 #  (znajdowania miejsca zerowego) równań nieliniowych. 
 # Implementacja Metody Bisekcji oraz Metoda Stycznych.
@@ -256,7 +220,79 @@ def ctg(x):
 text_section_begin: str = "Podaj wartość reprezentującą początek przedziału: "
 text_section_end: str = "Podaj wartość reprezentującą początek przedziału: "
 text_select_criterion: str = "Wybierz kryterium (1.Spełnienie warunku epsilon  2.Liczba Iteracji): "
+text_select_upper_function: str = "Wybierz funkcję nadrzędną (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza): "
 text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
+text_select_trygonomic_function: str = "Wybierz funkcję trygonometryczną (1.Sinus, 2.Cosinus, 3.Tanges 4.Cotanges): "
+
+
+class polynomial:
+    def __int__(self):
+        pass
+    def value(self) -> float:
+        pass
+
+class exponensial:
+    a = float
+    b = float
+    def __init__(self):
+        print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
+        self.a = input("Podaj wartość a:")
+        self.b = input("Podaj wartość b:")
+    def value(self,x) -> float:
+        e = numpy.e
+        return self.a * (e ** (self.b * x))
+
+class trygonometric:
+    def __init__(self):
+        self.function_type:int=0
+        while self.function_type < 1 or self.function_type > 4:
+            self.function_type = int(input(text_select_trygonomic_function))
+    def value(self,x) -> float:
+        match self.function_type:
+            case 1:
+                return math.sin(x)
+            case 2:
+                return math.cos(x)
+            case 3:
+                return math.tan(x)
+            case 4:
+                return math.cos(x)/math.sin(x)
+
+class combination:
+    def __init__(self):
+        function1_type = int(input(text_select_upper_function))
+        match function1_type:
+            case 1:
+                print("Wybrano funckje typu wielomian.")
+                self.function1 = polynomial()
+            case 2:
+                print("Wybrano funckje typu trygonometryczna.")
+                self.function1 = trygonometric()
+            case 3:
+                print("Wybrano funckje typu wykładnicza.")
+                self.function1 = exponensial()
+            case other:
+                return
+
+        function2_type = int(input(text_select_function))
+        match function2_type:
+            case 1:
+                print("Wybrano funckje typu wielomian.")
+                self.function2 = polynomial()
+            case 2:
+                print("Wybrano funckje typu trygonometryczna.")
+                self.function2 = trygonometric()
+            case 3:
+                print("Wybrano funckje typu wykładnicza.")
+                self.function2 = exponensial()
+            case 4:
+                print("Wybrano funckje typu złożona.")
+                self.function2 = combination()
+            case other:
+                return
+
+    def value(self,x) -> float:
+        return self.function1.value(self.function2.value(x))
 
 
 def bisection_method_recurent(polynomial_values: List[int], section_start: float, section_end: float):
@@ -296,14 +332,6 @@ def calc_polynomial_function(polynomial: List[int], x_value: float) -> float:
 
         result += sum
     return result
-
-
-def abs(x):
-    if x < 0:
-        return x * (-1)
-    else:
-        return x
-
 
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
     polynomial_values: List[int]
