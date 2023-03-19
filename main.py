@@ -165,13 +165,6 @@ def wyk_pudelkowy(lista1, lista2, lista3):
     plt.ylabel('Szerokość (cm)')
     plt.show()"""
 
-
-def exponential_fuction():
-    print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
-    a = input("Podaj wartość a:")
-    b = input("Podaj wartość b:")
-
-
 def value_exponential_fuction(a, b, x):
     e = numpy.e
     return a * (e ** (b * x))
@@ -188,7 +181,7 @@ def factorial(x,y):
     value:int = 1
     if y%1 == 0: #w zwiazku z zakazem podnoszenia do potęgi całkowitej za pomocą funkcji zastosowaliśmy dane rozwiazanie
         for i in y:
-            value * x
+            value = value * x
         return value
     else:
         return x**y
@@ -240,6 +233,11 @@ class polynomial:
 
     def input(self) -> List[int]:
         input_number = int(input("Wprowadz stopien wielomianu: ")) + 1
+        self.polynomial_values = [0] * input_number
+        for i in range(input_number - 1, 0 - 1, -1):
+            print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
+            self.polynomial_values[input_number - 1 - i] = int(input())
+
 
     def value(self, x_value) -> float:
         sum:float = 0
@@ -264,7 +262,7 @@ class exponensial:
 
     def value(self, x) -> float:
         e = numpy.e
-        return self.a * (e ** (self.b * x)) #  same as pow ?
+        return self.a * (e ** (self.b * x))
 
 class trigonometric:
     function_type:int = 0
@@ -287,37 +285,70 @@ class trigonometric:
                 return math.cos(x)/math.sin(x)
 
 class combination:
-    def __init__(self,function1_type,function2_type):
-        function1_type = int(input(text_select_upper_function))
+    def __init__(self,function1_type:int,function2_type:int):
+        function1_type =function1_type
         match function1_type:
             case 1:
                 print("Wybrano funckje typu wielomian.")
                 self.function1 = polynomial()
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
-                self.function1 = trigonometric()
+                self.function1 = trigonometric(1)
             case 3:
                 print("Wybrano funckje typu wykładnicza.")
-                self.function1 = exponensial()
+                self.function1 = exponensial(1)
             case other:
                 return
 
-        function2_type = int(input(text_select_function))
+        function2_type = function2_type
         match function2_type:
             case 1:
                 print("Wybrano funckje typu wielomian.")
                 self.function2 = polynomial()
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
-                self.function2 = trigonometric()
+                self.function2 = trigonometric(1)
             case 3:
                 print("Wybrano funckje typu wykładnicza.")
-                self.function2 = exponensial()
+                self.function2 = exponensial(1)
             case 4:
                 print("Wybrano funckje typu złożona.")
-                self.function2 = combination()
+                self.function2 = combination(2,2)
             case other:
                 return
+    def input(self):
+        self.function1_type = int(input(text_select_upper_function))
+        match self.function1_type:
+            case 1:
+                print("Wybrano funckje typu wielomian.")
+                self.function1 = polynomial()
+            case 2:
+                print("Wybrano funckje typu trygonometryczna.")
+                self.function1 = trigonometric(1)
+            case 3:
+                print("Wybrano funckje typu wykładnicza.")
+                self.function1 = exponensial(1)
+            case other:
+                return
+        self.function2_type = int(input(text_select_function))
+        match self.function2_type:
+            case 1:
+                print("Wybrano funckje typu wielomian.")
+                self.function2 = polynomial()
+            case 2:
+                print("Wybrano funckje typu trygonometryczna.")
+                self.function2 = trigonometric(1)
+            case 3:
+                print("Wybrano funckje typu wykładnicza.")
+                self.function2 = exponensial(1)
+            case 4:
+                print("Wybrano funckje typu złożona.")
+                self.function2 = combination(2, 2)
+            case other:
+                return
+        self.function1.input()
+        self.function2.input()
+
     def value(self,x) -> float:
         return self.function1.value(self.function2.value(x))
 
