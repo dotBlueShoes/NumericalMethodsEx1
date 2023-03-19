@@ -1,11 +1,11 @@
 import numpy
 from typing import List
 
-import ploting
 
 import methods.bisection as bisection
 import methods.newtons as newtons
 import methods.secant as secant
+
 
 from functions.trigonometric import trigonometric
 from functions.exponensial import exponensial
@@ -329,6 +329,7 @@ def main():
     section_start = float(input(text_section_begin))
     section_end = float(input(text_section_end))
     selected_criterion = int(input(text_select_criterion))
+
 
     if selected_criterion == limit_epsilon:
         print("Wybrano kryterium [ |x(i) − x(i−1)| < ε ]")

@@ -12,7 +12,7 @@ class exponensial:
         self.a = input("Podaj wartość a:")
         #self.b = input("Podaj wartość b:")
 
-    def value(self: float, x: int) -> float:
+    def value(self: float, x: float) -> float:
         #print("complex: " + str(numpy.float_power(self.a, x)))
         #print("complex: " + str(self.a ** x))
         return float_power(self.a, x)

@@ -1,5 +1,6 @@
 from typing import List
 from sys import float_info
+import ploting
 import shared
             
 def iteration(iterations: int, mathematical_function: object, section_start: float, section_end: float) -> int:
@@ -13,6 +14,7 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 
 		if mid_result == 0.0:
 			print("WYNIK: x = " + str(section_mid) + " jest miejscem 0'wym.")
+			ploting.plot_function(mathematical_function,section_start,section_end,'Metoda bisekcji',True,section_mid)
 			return i
 		else:
 			result_start: float = mathematical_function.value(section_start)
@@ -20,8 +22,8 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 				section_start = section_mid
 			else:
 				section_end = section_mid
+	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda bisekcji')
 	return i
-
 
 # |x(i) − x(i−1)| < ε
 def epsilon(epsilon: float, mathematical_function: object, section_start: float, section_end: float) -> int:
@@ -46,6 +48,7 @@ def epsilon(epsilon: float, mathematical_function: object, section_start: float,
 
 		if mid_result == 0.0:
 			print("WYNIK: x = " + str(section_mid) + " jest miejscem 0'wym.")
+			ploting.plot_function(mathematical_function, section_start, section_end,'Metoda bisekcji',True,section_mid)
 			return i
 		else:
 			result_start: float = mathematical_function.value(section_start)
@@ -55,4 +58,5 @@ def epsilon(epsilon: float, mathematical_function: object, section_start: float,
 			else:
 				#print("-, " + str(result_start) + ", " + str(mid_result))
 				section_end = section_mid
+	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda bisekcji')
 	return i

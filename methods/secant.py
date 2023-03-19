@@ -1,3 +1,4 @@
+import ploting
 
 def iteration(iterations: int, mathematical_function: object, section_start: float, section_end: float) -> int:
 	
@@ -18,6 +19,7 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 		denominator: float = (prev_calculation - prev_prev_calculation)
 		if (denominator == 0.0):
 			print("Mianownik wynosi '0' przerwanie iteracji !")
+			ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych',True,current)
 			return i
 
 		current = prev_value - (
@@ -29,7 +31,7 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 		prev_value = current
 
 		print("I " + str(i + 1) + ": pp/p/c: " + str(prev_prev_value) + ", " + str(prev_value) + ", " + str(current))
-
+	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych')
 	return i
 
 def epsilon(epsilon: float, mathematical_function: object, section_start: float, section_end: float) -> int:
@@ -52,6 +54,7 @@ def epsilon(epsilon: float, mathematical_function: object, section_start: float,
 		denominator: float = (prev_calculation - prev_prev_calculation)
 		if (denominator == 0.0):
 			print("Mianownik wynosi '0' przerwanie iteracji !")
+			ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych',True,current)
 			return i
 
 		current = prev_value - (
@@ -64,4 +67,5 @@ def epsilon(epsilon: float, mathematical_function: object, section_start: float,
 
 		print("I " + str(i + 1) + ": pp/p/c: " + str(prev_prev_value) + ", " + str(prev_value) + ", " + str(current))
 
+	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych')
 	return i
