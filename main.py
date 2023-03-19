@@ -1,12 +1,15 @@
 import matplotlib.pyplot as plt
-import math
 import numpy
 import statistics as st
 from typing import List
 
-import bisection_method
-import newtons_method
-import secant_method
+import methods.bisection as bisection
+import methods.newtons as newtons
+import methods.secant as secant
+
+from functions.trigonometric import trigonometric
+from functions.exponensial import exponensial
+from functions.polynomial import polynomial
 
 """class Kwiat:
     sepal_length = float
@@ -180,183 +183,19 @@ def mabs(x):
 
 def factorial(x, y):
     value:int = 1
-    if y%1 == 0: #w zwiazku z zakazem podnoszenia do potęgi całkowitej za pomocą funkcji zastosowaliśmy dane rozwiazanie
+    if y%1 == 0: # W zwiazku z zakazem podnoszenia do potęgi całkowitej za pomocą funkcji zastosowaliśmy dane rozwiazanie
         for i in y:
             value = value * x
         return value
     else:
         return numpy.float_power(x, y)
 
-
-# Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania
-#  (znajdowania miejsca zerowego) równań nieliniowych. 
-# Implementacja Metody Bisekcji oraz Metoda Siecznych.
-#
-# 1. Osiągnięcie zadanej dokładności obliczeń (wariant A lub B powyżej); 
-# 2. Wykonanie określonej przez użytkownika liczby iteracji.
-#
-# Program ma mieć wbudowane kilka różnych funkcji nieliniowych: wielomian, trygonometryczną, wykładniczą i ich złożenia. 
-# Użytkownik wybiera jedną z funkcji, określa przedział na którym poszukiwane jest miejsce zerowe oraz wybiera 
-# kryterium zatrzymania algorytmu: 
-#   a) spełnienie warunku nałożonego na dokładność [|x(i) − x(i−1)| < ε]
-#   b) osiągnięcie zadanej liczby iteracji.
-#
-# Następnie użytkownik wprowadza ε (w przypadku wybrania pierwszego kryterium) lub 
-#  liczbę iteracji (w przypadku wyboru drugiego kryterium). 
-#
-# Program wykonuje obliczenia przy użyciu obu metod (bisekcja oraz jeden z przydzielonych wariantów), 
-#  wyświetla wyniki i rysuje wykres wybranej funkcji na zadanym przedziale, 
-#  zaznaczając rozwiązania na wykresie. 
-#
-# Program ma sprawdzać poprawność założenia o przeciwnych znakach funkcji na krańcach badanego przedziału. 
-# Nie trzeba sprawdzać prawdziwości założeń o stałym znaku pochodnych na przedziale. 
-# W przypadku metody stycznych dozwolone jest zakodowanie wartości pochodnej na sztywno, nie trzeba jej liczyć numerycznie.
-
-# Wielomian
-# W(x) = 1x^4 + 1x^3 + 1x^2 + 1x + 1 
-
-# Note! float in python is same as C double type !
-
 # TEXTS
 text_section_begin: str = "Podaj wartość reprezentującą początek przedziału: "
 text_section_end: str = "Podaj wartość reprezentującą koniec przedziału: "
 text_select_criterion: str = "Wybierz kryterium (1.Spełnienie warunku epsilon  2.Liczba Iteracji): "
-text_select_upper_function: str = "Wybierz funkcję nadrzędną (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza): "
-text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
-text_select_trygonomic_function: str = "Wybierz funkcję trygonometryczną (1.Sinus, 2.Cosinus, 3.Tanges 4.Cotanges): "
 text_error_wrong_input: str = "Wprowadzono błędny znak nie odpowiadający poleceniu!"
-
-
-class polynomial:
-    polynomial_values: List[int]
-    def __init__(self, polynomial_values):
-        self.polynomial_values=polynomial_values
-
-    def input(self) -> List[int]:
-        input_number = int(input("Wprowadz stopien wielomianu: ")) + 1
-        self.polynomial_values = [0] * input_number
-        for i in range(input_number - 1, 0 - 1, -1):
-            print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
-            self.polynomial_values[input_number - 1 - i] = int(input())
-
-
-    def value(self, x_value) -> float:
-        sum:float = 0
-        last_elem: int = len(self.polynomial_values) - 1
-
-        for i in range(0,last_elem):
-            sum = (sum + self.polynomial_values[i]) * x_value
-        sum += self.polynomial_values[last_elem]
-        return sum
-
-class exponensial:
-    a = float
-    #b = float
-    def __init__(self, a):
-        self.a = a
-        #self.b = b
-
-    def input(self):
-        print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
-        self.a = input("Podaj wartość a:")
-        #self.b = input("Podaj wartość b:")
-
-    def value(self: float, x: int) -> float:
-        #print("complex: " + str(numpy.float_power(self.a, x)))
-        #print("complex: " + str(self.a ** x))
-        return numpy.float_power(self.a, x)
-        #return factorial(self.a, x)
-
-class trigonometric:
-    function_type:int = 0
-    def __init__(self, type):
-        self.function_type:int=type
-
-    def input(self):
-        while self.function_type < 1 or self.function_type > 4:
-            self.function_type = int(input(text_select_trygonomic_function))
-
-    def value(self,x) -> float:
-        match self.function_type:
-            case 1:
-                return math.sin(x)
-            case 2:
-                return math.cos(x)
-            case 3:
-                return math.tan(x)
-            case 4:
-                return math.cos(x)/math.sin(x)
-
-class combination:
-    def __init__(self,function1_type:int,function2_type:int):
-        lista: List[int] = [1, 1]
-        function1_type =function1_type
-        match function1_type:
-            case 1:
-                print("Wybrano funckje typu wielomian.")
-                self.function1 = polynomial(lista)
-            case 2:
-                print("Wybrano funckje typu trygonometryczna.")
-                self.function1 = trigonometric(1)
-            case 3:
-                print("Wybrano funckje typu wykładnicza.")
-                self.function1 = exponensial(1)
-            case other:
-                return
-
-        function2_type = function2_type
-        match function2_type:
-            case 1:
-                print("Wybrano funckje typu wielomian.")
-                self.function2 = polynomial(lista)
-            case 2:
-                print("Wybrano funckje typu trygonometryczna.")
-                self.function2 = trigonometric(1)
-            case 3:
-                print("Wybrano funckje typu wykładnicza.")
-                self.function2 = exponensial(1)
-            case 4:
-                print("Wybrano funckje typu złożona.")
-                self.function2 = combination(2,2)
-            case other:
-                return
-    def input(self):
-        lista: List[int] = [1, 1]
-        self.function1_type = int(input(text_select_upper_function))
-        match self.function1_type:
-            case 1:
-                print("Wybrano funckje typu wielomian.")
-                self.function1 = polynomial(lista)
-            case 2:
-                print("Wybrano funckje typu trygonometryczna.")
-                self.function1 = trigonometric(1)
-            case 3:
-                print("Wybrano funckje typu wykładnicza.")
-                self.function1 = exponensial(1)
-            case other:
-                return
-        self.function2_type = int(input(text_select_function))
-        match self.function2_type:
-            case 1:
-                print("Wybrano funckje typu wielomian.")
-                self.function2 = polynomial(lista)
-            case 2:
-                print("Wybrano funckje typu trygonometryczna.")
-                self.function2 = trigonometric(1)
-            case 3:
-                print("Wybrano funckje typu wykładnicza.")
-                self.function2 = exponensial(1)
-            case 4:
-                print("Wybrano funckje typu złożona.")
-                self.function2 = combination(2, 2)
-            case other:
-                return
-        self.function1.input()
-        self.function2.input()
-
-    def value(self,x) -> float:
-        return self.function1.value(self.function2.value(x))
-
+text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
 
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
@@ -366,11 +205,11 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
     print("\n")
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.iteration(iteration_number, polynomial_values, section_start, section_end)
+    bisection_iterations: int = bisection.iteration(iteration_number, polynomial_values, section_start, section_end)
     print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
-    secant_iterations: int = secant_method.iteration(iteration_number, polynomial_values, section_start, section_end)
+    secant_iterations: int = secant.iteration(iteration_number, polynomial_values, section_start, section_end)
     print("secant: " + str(secant_iterations))
     
 
@@ -381,11 +220,11 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
     print("\n")
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    bisection_iterations: int = bisection.epsilon(epsilon_number, polynomial_values, section_start, section_end)
     print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
-    secant_iterations: int = secant_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    secant_iterations: int = secant.epsilon(epsilon_number, polynomial_values, section_start, section_end)
     print("secant: " + str(secant_iterations))
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
@@ -396,11 +235,11 @@ def trigonometric_iteration_search(section_start: float, section_end: float, ite
     print("\n")
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
+    bisection_iterations: int = bisection.iteration(iteration_number, trigonometric_values, section_start, section_end)
     print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
-    secant_iterations: int = secant_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
+    secant_iterations: int = secant.iteration(iteration_number, trigonometric_values, section_start, section_end)
     print("secant: " + str(secant_iterations))
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
@@ -411,11 +250,11 @@ def trigonometric_epsilon_search(section_start: float, section_end: float, epsil
     print("\n")
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
+    bisection_iterations: int = bisection.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
     print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
-    secant_iterations: int = secant_method.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
+    secant_iterations: int = secant.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
     print("secant: " + str(secant_iterations))
 
 def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
@@ -425,11 +264,11 @@ def exponensial_iteration_search(section_start: float, section_end: float, itera
     print("\n")
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.iteration(iteration_number, exponensial_value, section_start, section_end)
+    bisection_iterations: int = bisection.iteration(iteration_number, exponensial_value, section_start, section_end)
     print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
-    secant_iterations: int = secant_method.iteration(iteration_number, exponensial_value, section_start, section_end)
+    secant_iterations: int = secant.iteration(iteration_number, exponensial_value, section_start, section_end)
     print("secant: " + str(secant_iterations))
 
 def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
@@ -439,11 +278,11 @@ def exponensial_epsilon_search(section_start: float, section_end: float, epsilon
     print("\n")
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.epsilon(epsilon_number, exponensial_value, section_start, section_end)
+    bisection_iterations: int = bisection.epsilon(epsilon_number, exponensial_value, section_start, section_end)
     print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
-    secant_iterations: int = secant_method.epsilon(epsilon_number, exponensial_value, section_start, section_end)
+    secant_iterations: int = secant.epsilon(epsilon_number, exponensial_value, section_start, section_end)
     print("secant: " + str(secant_iterations))
 
 def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
