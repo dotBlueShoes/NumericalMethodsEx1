@@ -286,11 +286,12 @@ class trigonometric:
 
 class combination:
     def __init__(self,function1_type:int,function2_type:int):
+        lista: [int] = [1, 1]
         function1_type =function1_type
         match function1_type:
             case 1:
                 print("Wybrano funckje typu wielomian.")
-                self.function1 = polynomial()
+                self.function1 = polynomial(lista)
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
                 self.function1 = trigonometric(1)
@@ -304,7 +305,7 @@ class combination:
         match function2_type:
             case 1:
                 print("Wybrano funckje typu wielomian.")
-                self.function2 = polynomial()
+                self.function2 = polynomial(lista)
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
                 self.function2 = trigonometric(1)
@@ -317,11 +318,12 @@ class combination:
             case other:
                 return
     def input(self):
+        lista: [int] = [1, 1]
         self.function1_type = int(input(text_select_upper_function))
         match self.function1_type:
             case 1:
                 print("Wybrano funckje typu wielomian.")
-                self.function1 = polynomial()
+                self.function1 = polynomial(lista)
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
                 self.function1 = trigonometric(1)
@@ -334,7 +336,7 @@ class combination:
         match self.function2_type:
             case 1:
                 print("Wybrano funckje typu wielomian.")
-                self.function2 = polynomial()
+                self.function2 = polynomial(lista)
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
                 self.function2 = trigonometric(1)
