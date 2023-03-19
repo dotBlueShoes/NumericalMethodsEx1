@@ -246,7 +246,7 @@ class exponensial:
         e = numpy.e
         return self.a * (e ** (self.b * x))
 
-class trygonometric:
+class trigonometric:
     def __init__(self):
         self.function_type:int=0
         while self.function_type < 1 or self.function_type > 4:
@@ -271,7 +271,7 @@ class combination:
                 self.function1 = polynomial()
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
-                self.function1 = trygonometric()
+                self.function1 = trigonometric()
             case 3:
                 print("Wybrano funckje typu wykładnicza.")
                 self.function1 = exponensial()
@@ -285,7 +285,7 @@ class combination:
                 self.function2 = polynomial()
             case 2:
                 print("Wybrano funckje typu trygonometryczna.")
-                self.function2 = trygonometric()
+                self.function2 = trigonometric()
             case 3:
                 print("Wybrano funckje typu wykładnicza.")
                 self.function2 = exponensial()
@@ -384,10 +384,19 @@ def combination_epsilon_search(section_start: float, section_end: float, epsilon
     pass
 
 
+# polynomial:
+#  x^3 - 2x - 5, x = 2 
+# 
+#  cos(x) + sin(x) + tg(x) - ctg(x), x = 0
+#
+
+# 1. Wybór funkcji
+# 2. Wybiera przedział A-B
+# 3. Wybiera kryterium a, b
 def main():
-    # 1. Wybór funkcji
-    # 2. Wybiera przedział A-B
-    # 3. Wybiera kryterium a, b
+
+    limit_iterations: int = 2
+    limit_epsilon: int = 1
 
     section_start: float = 0
     section_end: float = 0
@@ -411,7 +420,7 @@ def main():
     section_end = float(input(text_section_end))
     selected_criterion = int(input(text_select_criterion))
 
-    if selected_criterion == 1:  # [ |x(i) − x(i−1)| < ε ]
+    if selected_criterion == limit_iterations:
         print("Wybrano kryterium [ |x(i) − x(i−1)| < ε ]")
         epsilon: float = 0
         epsilon = float(input("Wprowadź wartość epsilon: "))
@@ -429,7 +438,7 @@ def main():
                 print(text_error_wrong_input)
                 return
 
-    elif selected_criterion == 2:  # Iteration
+    elif selected_criterion == limit_epsilon:
         print("Wybrano kryterium [ Liczba iteracji ]")
         iteration_number: int = 0
         iteration_number = int(input("Wprowadź liczbę iteracji: "))
@@ -448,7 +457,6 @@ def main():
                 return
 
     input_number = input()
-
 
 if __name__ == '__main__':
     main()
