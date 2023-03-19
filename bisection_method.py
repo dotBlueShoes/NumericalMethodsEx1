@@ -2,7 +2,8 @@ from typing import List
 from sys import float_info
 import shared
             
-def polynomial_iteration(iterations: int, polynomial_values: List[int], section_start: float, section_end: float):
+def polynomial_iteration(iterations: int, polynomial_values: List[int], section_start: float, section_end: float) -> int:
+	i: int = 0
 	for i in range(iterations):
 
 		section_mid: float = (section_start + section_end) / 2
@@ -12,7 +13,7 @@ def polynomial_iteration(iterations: int, polynomial_values: List[int], section_
 
 		if mid_result == 0.0:
 			print("WYNIK: x = " + str(section_mid) + " jest miejscem 0'wym.")
-			return
+			return i
 		else:
 			result_start: float = shared.calc_polynomial_function(polynomial_values, section_start)
 			if (result_start >= 0 and mid_result >= 0) or (result_start < 0 and mid_result < 0): # Check for the same sign
@@ -21,10 +22,11 @@ def polynomial_iteration(iterations: int, polynomial_values: List[int], section_
 			else:
 				#print("-, " + str(result_start) + ", " + str(mid_result))
 				section_end = section_mid
+	return i
 
 
 # |x(i) − x(i−1)| < ε
-def polynomial_epsilon(epsilon: int, polynomial_values: List[int], section_start: float, section_end: float):
+def polynomial_epsilon(epsilon: int, polynomial_values: List[int], section_start: float, section_end: float) -> int:
 	
 	section_mid: float = float_info.max
 	prev_section_mid: float = 0
@@ -46,7 +48,7 @@ def polynomial_epsilon(epsilon: int, polynomial_values: List[int], section_start
 
 		if mid_result == 0.0:
 			print("WYNIK: x = " + str(section_mid) + " jest miejscem 0'wym.")
-			return
+			return i
 		else:
 			result_start: float = shared.calc_polynomial_function(polynomial_values, section_start)
 			if (result_start >= 0 and mid_result >= 0) or (result_start < 0 and mid_result < 0): # Check for the same sign
@@ -55,3 +57,4 @@ def polynomial_epsilon(epsilon: int, polynomial_values: List[int], section_start
 			else:
 				#print("-, " + str(result_start) + ", " + str(mid_result))
 				section_end = section_mid
+	return i

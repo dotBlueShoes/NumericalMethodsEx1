@@ -320,11 +320,12 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
     input_number = int(input())
 
     # BISECTION METHOD
-    bisection_method.polynomial_iteration(iteration_number, polynomial_values, section_start, section_end)
+    bisection_iterations: int = bisection_method.polynomial_iteration(iteration_number, polynomial_values, section_start, section_end)
+    print("besection: " + str(bisection_iterations))
 
-    # CALCULATE POLYNOMIAL
-    # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
-    # print("Wynik wynosi: " + str(result))
+    derivative_values: List[int] = [3, 0, -2] #[1, 0, -2, -5]
+    newton_iterations: int = newtons_method.polynomial_iteration(iteration_number, input_number, polynomial_values, derivative_values)
+    print("newton: " + str(newton_iterations))
 
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
@@ -363,11 +364,12 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
 
 
     # BISECTION METHOD
-    bisection_method.polynomial_epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    bisection_iterations: int = bisection_method.polynomial_epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    print("bisection: " + str(bisection_iterations))
 
-    # CALCULATE POLYNOMIAL
-    # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
-    # print("Wynik wynosi: " + str(result))
+    derivative_values: List[int] = [3, 0, -2] #[1, 0, -2, -5]
+    newton_iterations: int = newtons_method.polynomial_epsilon(epsilon_number, input_number, polynomial_values, derivative_values)
+    print("newton: " + str(newton_iterations))
 
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):

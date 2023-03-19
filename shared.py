@@ -1,7 +1,8 @@
 from typing import List
 
-# Check if it is correct math!!! and comment through
-#  użyj schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#def calc_derivative(polynomial: List[int]) -> List[int]:
+
+
 def calc_polynomial_function(polynomial: List[int], x_value: float) -> float:
 	polynomial_degree: int = len(polynomial)
 	last_elem: int = polynomial_degree - 1
