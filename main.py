@@ -184,11 +184,15 @@ def mabs(x):
         return x
 
 
-def factorial(x):
-    value = 1
-    for i in x:
-        value = value * i
-    return value
+def factorial(x,y):
+    value:int = 1
+    if y%1 == 0: #w zwiazku z zakazem podnoszenia do potęgi całkowitej za pomocą funkcji zastosowaliśmy dane rozwiazanie
+        for i in y:
+            value * x
+        return value
+    else:
+        return x**y
+
 
 # Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania
 #  (znajdowania miejsca zerowego) równań nieliniowych. 
