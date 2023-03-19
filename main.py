@@ -307,7 +307,7 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
 
     # INPUT POLYNOMIAL 
     print("Wprowadz stopien wielomianu: ")
-    input_number = int(input())  # get polygonal rank - length of the array.
+    input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
     polynomial_values = [0] * input_number  # initialize array with 0's.
 
     # Get a, b, c, d, ... values.
@@ -321,7 +321,7 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
 
 
     # BISECTION METHOD
-    bisection_method.bisection_method(iteration_number, polynomial_values, section_start, section_end)
+    bisection_method.iteration(iteration_number, polynomial_values, section_start, section_end)
 
     # CALCULATE POLYNOMIAL
     # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
@@ -341,7 +341,33 @@ def combination_iteration_search(section_start: float, section_end: float, itera
 
 
 def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
-    pass
+    polynomial_values: List[int]
+    input_number: int = 0
+
+    print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
+
+
+    # INPUT POLYNOMIAL 
+    print("Wprowadz stopien wielomianu: ")
+    input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
+    polynomial_values = [0] * input_number  # initialize array with 0's.
+
+    # Get a, b, c, d, ... values.
+    for i in range(0, input_number):
+        print("Wprowadz wartosc " + str(i + 1) + " skladnika wielomianu: ")
+        polynomial_values[i] = int(input())
+
+    # Get x value
+    print("Wprowadz wartosc x: ")
+    input_number = int(input())
+
+
+    # BISECTION METHOD
+    bisection_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
+
+    # CALCULATE POLYNOMIAL
+    # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
+    # print("Wynik wynosi: " + str(result))
 
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
