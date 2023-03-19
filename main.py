@@ -230,10 +230,21 @@ text_error_wrong_input: str = "Wprowadzono błędny znak nie odpowiadający pole
 
 
 class polynomial:
-    def __int__(self):
-        pass
-    def value(self) -> float:
-        pass
+    polynomial_values: List[int]
+    def __int__(self,polynomial_values):
+        self.polynomial_values=polynomial_values
+
+    def input(self) -> List[int]:
+        input_number = int(input("Wprowadz stopien wielomianu: ")) + 1
+
+def value(self,x_value) -> float:
+        sum:float = 0
+        last_elem: int = len(self.polynomial_values) - 1
+
+        for i in range(0,last_elem):
+            sum = (sum + polynomial[i]) * x_value
+        sum += polynomial[last_elem]
+        return sum
 
 class exponensial:
     a = float
@@ -351,7 +362,6 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
     print("Wprowadz stopien wielomianu: ")
     input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
     polynomial_values = [0] * input_number  # initialize array with 0's.
-
     # Get a, b, c, d, ... values.
     #for i in range(0, input_number):
     for i in range(input_number - 1, 0 - 1, -1):
