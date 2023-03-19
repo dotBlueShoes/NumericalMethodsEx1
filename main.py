@@ -248,18 +248,19 @@ class polynomial:
 
 class exponensial:
     a = float
-    b = float
-    def __init__(self,a,b):
+    #b = float
+    def __init__(self, a):
         self.a = a
-        self.b = b
+        #self.b = b
 
     def input(self):
         print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
         self.a = input("Podaj wartość a:")
         self.b = input("Podaj wartość b:")
-    def value(self,x) -> float:
+
+    def value(self, x) -> float:
         e = numpy.e
-        return self.a * (e ** (self.b * x))
+        return self.a * (e ** (self.b * x)) #  same as pow ?
 
 class trigonometric:
     function_type:int = 0
@@ -348,7 +349,9 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
 
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    trigonometric_values = trigonometric()
+    function_type: int = 1 # sin, cos, tg, ctg
+
+    trigonometric_values = trigonometric(function_type)
     print("a: " + str(trigonometric_values.function_type))
 
     bisection_iterations: int = bisection_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
@@ -398,7 +401,9 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
-    trigonometric_values = trigonometric()
+    function_type: int = 1 # sin, cos, tg, ctg
+
+    trigonometric_values = trigonometric(function_type)
     print("a: " + str(trigonometric_values.function_type))
 
     bisection_iterations: int = bisection_method.epsilon(epsilon_number, trigonometric_values, section_start, section_end)
