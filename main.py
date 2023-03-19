@@ -249,7 +249,11 @@ def value(self,x_value) -> float:
 class exponensial:
     a = float
     b = float
-    def __init__(self):
+    def __init__(self,a,b):
+        self.a = a
+        self.b = b
+
+    def input(self):
         print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
         self.a = input("Podaj wartość a:")
         self.b = input("Podaj wartość b:")
@@ -258,8 +262,11 @@ class exponensial:
         return self.a * (e ** (self.b * x))
 
 class trigonometric:
-    def __init__(self):
-        self.function_type:int=0
+    function_type:int = 0
+    def __init__(self,type):
+        self.function_type:int=type
+
+    def input(self):
         while self.function_type < 1 or self.function_type > 4:
             self.function_type = int(input(text_select_trygonomic_function))
     def value(self,x) -> float:
@@ -274,7 +281,7 @@ class trigonometric:
                 return math.cos(x)/math.sin(x)
 
 class combination:
-    def __init__(self):
+    def __init__(self,function1_type,function2_type):
         function1_type = int(input(text_select_upper_function))
         match function1_type:
             case 1:
@@ -305,7 +312,6 @@ class combination:
                 self.function2 = combination()
             case other:
                 return
-
     def value(self,x) -> float:
         return self.function1.value(self.function2.value(x))
 
