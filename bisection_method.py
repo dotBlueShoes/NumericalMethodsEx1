@@ -1,4 +1,5 @@
 from typing import List
+from sys import float_info
 import shared
             
 def iteration(iterations: int, polynomial_values: List[int], section_start: float, section_end: float):
@@ -22,14 +23,22 @@ def iteration(iterations: int, polynomial_values: List[int], section_start: floa
 				section_end = section_mid
 
 
+# |x(i) − x(i−1)| < ε
 def epsilon(epsilon: int, polynomial_values: List[int], section_start: float, section_end: float):
+	
+	section_mid: float = float_info.max
+	prev_section_mid: float = 0
+	mid_result: float = 0
 	i: int = 0
-	while epsilon < abs(section_start - section_end):
 
-		print(abs(section_start - section_end))
+	while epsilon < abs(section_mid - prev_section_mid):
 
-		section_mid: float = (section_start + section_end) / 2
-		mid_result: float = shared.calc_polynomial_function(polynomial_values, section_mid)
+		prev_section_mid = section_mid
+		section_mid = (section_start + section_end) / 2
+
+		#print(str(abs(section_mid - prev_section_mid)))
+
+		mid_result = shared.calc_polynomial_function(polynomial_values, section_mid)
 
 		i += 1
 		print("I " + str(i) + ": s/m/e: " +str(section_start) + ", " + str(section_mid) + ", " + str(section_end))
