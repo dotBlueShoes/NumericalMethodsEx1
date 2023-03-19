@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 import math
-from typing import List
 import numpy
 import statistics as st
+from typing import List
+
+import bisection_method
+import newtons_method
 
 """class Kwiat:
     sepal_length = float
@@ -198,7 +201,7 @@ def factorial(x):
 # Użytkownik wybiera jedną z funkcji, określa przedział na którym poszukiwane jest miejsce zerowe oraz wybiera 
 # kryterium zatrzymania algorytmu: 
 #   a) spełnienie warunku nałożonego na dokładność [|x(i) − x(i−1)| < ε]
-#   b) osiągnięcie zadanej liczby iteracji. 
+#   b) osiągnięcie zadanej liczby iteracji.
 #
 # Następnie użytkownik wprowadza ε (w przypadku wybrania pierwszego kryterium) lub 
 #  liczbę iteracji (w przypadku wyboru drugiego kryterium). 
@@ -223,6 +226,7 @@ text_select_criterion: str = "Wybierz kryterium (1.Spełnienie warunku epsilon  
 text_select_upper_function: str = "Wybierz funkcję nadrzędną (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza): "
 text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
 text_select_trygonomic_function: str = "Wybierz funkcję trygonometryczną (1.Sinus, 2.Cosinus, 3.Tanges 4.Cotanges): "
+text_error_wrong_input: str = "Wprowadzono błędny znak nie odpowiadający poleceniu!"
 
 
 class polynomial:
@@ -294,53 +298,14 @@ class combination:
     def value(self,x) -> float:
         return self.function1.value(self.function2.value(x))
 
-
-def bisection_method_recurent(polynomial_values: List[int], section_start: float, section_end: float):
-    section_mid: float = (section_start + section_end) / 2
-    mid_result: float = calc_polynomial_function(polynomial_values, section_mid)
-
-    if mid_result == 0:
-        print("Wynik: x = " + str(section_mid) + " jest miejscem 0'wym.")
-        return
-    else:
-        result_start: float = calc_polynomial_function(polynomial_values, section_start)
-        # result_end: float = calc_polynomial_function(polynomial_values, section_end)
-
-        # Sprawdzenie czy znak jest taki sam.
-        if result_start >= 0 and mid_result >= 0 or result_start < 0 and mid_result < 0:
-            # [c, b]
-            print("+, " + str(result_start) + ", " + str(mid_result))
-            bisection_method_recurent(polynomial_values, section_mid, section_end)
-        else:
-            # [a, c]
-            print("-, " + str(result_start) + ", " + str(mid_result))
-            bisection_method_recurent(polynomial_values, section_start, section_mid)
-
-
-# Check if it is correct math!!! and comment through
-#  użyj schematu Hornera.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def calc_polynomial_function(polynomial: List[int], x_value: float) -> float:
-    polynomial_degree: int = len(polynomial)
-    result: float = 0
-    sum: float = 0
-
-    for i in range(0, polynomial_degree):
-        sum = polynomial[i]
-
-        for j in range(polynomial_degree - i - 1):
-            sum = sum * x_value
-
-        result += sum
-    return result
-
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
     polynomial_values: List[int]
     input_number: int = 0
 
     print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
 
-    # INPUT POLYNOMIAL 
 
+    # INPUT POLYNOMIAL 
     print("Wprowadz stopien wielomianu: ")
     input_number = int(input())  # get polygonal rank - length of the array.
     polynomial_values = [0] * input_number  # initialize array with 0's.
@@ -354,8 +319,9 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
     print("Wprowadz wartosc x: ")
     input_number = int(input())
 
+
     # BISECTION METHOD
-    bisection_method_recurent(polynomial_values, section_start, section_end)
+    bisection_method.bisection_method(iteration_number, polynomial_values, section_start, section_end)
 
     # CALCULATE POLYNOMIAL
     # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
@@ -410,6 +376,7 @@ def main():
         case 4:
             print("Wybrano funckje typu złożona.")
         case other:
+            print(text_error_wrong_input)
             return
 
     section_start = float(input(text_section_begin))
@@ -430,6 +397,9 @@ def main():
                 exponensial_epsilon_search(section_start, section_end, epsilon)
             case 4:
                 combination_epsilon_search(section_start, section_end, epsilon)
+            case other:
+                print(text_error_wrong_input)
+                return
 
     elif selected_criterion == 2:  # Iteration
         print("Wybrano kryterium [ Liczba iteracji ]")
@@ -445,6 +415,9 @@ def main():
                 exponensial_iteration_search(section_start, section_end, iteration_number)
             case 4:
                 combination_iteration_search(section_start, section_end, iteration_number)
+            case other:
+                print(text_error_wrong_input)
+                return
 
     input_number = input()
 
