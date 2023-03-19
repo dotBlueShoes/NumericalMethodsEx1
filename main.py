@@ -192,7 +192,7 @@ def factorial(x):
 
 # Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania
 #  (znajdowania miejsca zerowego) równań nieliniowych. 
-# Implementacja Metody Bisekcji oraz Metoda Stycznych.
+# Implementacja Metody Bisekcji oraz Metoda Siecznych.
 #
 # 1. Osiągnięcie zadanej dokładności obliczeń (wariant A lub B powyżej); 
 # 2. Wykonanie określonej przez użytkownika liczby iteracji.
@@ -231,19 +231,19 @@ text_error_wrong_input: str = "Wprowadzono błędny znak nie odpowiadający pole
 
 class polynomial:
     polynomial_values: List[int]
-    def __int__(self,polynomial_values):
+    def __init__(self, polynomial_values):
         self.polynomial_values=polynomial_values
 
     def input(self) -> List[int]:
         input_number = int(input("Wprowadz stopien wielomianu: ")) + 1
 
-def value(self,x_value) -> float:
+    def value(self, x_value) -> float:
         sum:float = 0
         last_elem: int = len(self.polynomial_values) - 1
 
         for i in range(0,last_elem):
-            sum = (sum + polynomial[i]) * x_value
-        sum += polynomial[last_elem]
+            sum = (sum + self.polynomial_values[i]) * x_value
+        sum += self.polynomial_values[last_elem]
         return sum
 
 class exponensial:
@@ -263,12 +263,13 @@ class exponensial:
 
 class trigonometric:
     function_type:int = 0
-    def __init__(self,type):
+    def __init__(self, type):
         self.function_type:int=type
 
     def input(self):
         while self.function_type < 1 or self.function_type > 4:
             self.function_type = int(input(text_select_trygonomic_function))
+
     def value(self,x) -> float:
         match self.function_type:
             case 1:
@@ -316,37 +317,44 @@ class combination:
         return self.function1.value(self.function2.value(x))
 
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    polynomial_values: List[int]
-    input_number: int = 0
+    #polynomial_values: List[int]
+    #input_number: int = 0
 
-    print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
+    #print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
 
     # INPUT POLYNOMIAL 
-    print("Wprowadz stopien wielomianu: ")
-    input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
-    polynomial_values = [0] * input_number  # initialize array with 0's.
+    #print("Wprowadz stopien wielomianu: ")
+    #input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
+    #polynomial_values = [0] * input_number  # initialize array with 0's.
 
     # Get a, b, c, d, ... values.
     #for i in range(0, input_number):
-    for i in range(input_number - 1, 0 - 1, -1):
-        print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
-        polynomial_values[input_number - 1 - i] = int(input())
+    #for i in range(input_number - 1, 0 - 1, -1):
+    #    print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
+    #    polynomial_values[input_number - 1 - i] = int(input())
 
     # Get x value
-    print("Wprowadz wartosc x: ")
-    input_number = int(input())
+    #print("Wprowadz wartosc x: ")
+    #input_number = int(input())
+    polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.polynomial_iteration(iteration_number, polynomial_values, section_start, section_end)
+    bisection_iterations: int = bisection_method.iteration(iteration_number, polynomial_values, section_start, section_end)
     print("besection: " + str(bisection_iterations))
 
-    derivative_values: List[int] = [3, 0, -2] #[1, 0, -2, -5]
-    newton_iterations: int = newtons_method.polynomial_iteration(iteration_number, input_number, polynomial_values, derivative_values)
-    print("newton: " + str(newton_iterations))
+    #derivative_values: List[int] = [3, 0, -2] #
+    #newton_iterations: int = newtons_method.polynomial_iteration(iteration_number, input_number, polynomial_values, derivative_values)
+    #print("newton: " + str(newton_iterations))
 
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    pass
+    trigonometric_values = trigonometric()
+    print("a: " + str(trigonometric_values.function_type))
+
+    bisection_iterations: int = bisection_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
+    print("bisection: " + str(bisection_iterations))
+
+    # NEWTON
 
 
 def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
@@ -358,38 +366,45 @@ def combination_iteration_search(section_start: float, section_end: float, itera
 
 
 def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
-    polynomial_values: List[int]
-    input_number: int = 0
+    #polynomial_values: List[int]
+    #input_number: int = 0
 
-    print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
-
+    #print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
 
     # INPUT POLYNOMIAL 
-    print("Wprowadz stopien wielomianu: ")
-    input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
-    polynomial_values = [0] * input_number  # initialize array with 0's.
+    #print("Wprowadz stopien wielomianu: ")
+    #input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
+    #polynomial_values = [0] * input_number  # initialize array with 0's.
     # Get a, b, c, d, ... values.
     #for i in range(0, input_number):
-    for i in range(input_number - 1, 0 - 1, -1):
-        print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
-        polynomial_values[input_number - 1 - i] = int(input())
+    #for i in range(input_number - 1, 0 - 1, -1):
+    #    print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
+    #    polynomial_values[input_number - 1 - i] = int(input())
 
     # Get x value
-    print("Wprowadz wartosc x: ")
-    input_number = int(input())
+    #print("Wprowadz wartosc x: ")
+    #input_number = int(input())
 
+    polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
 
     # BISECTION METHOD
-    bisection_iterations: int = bisection_method.polynomial_epsilon(epsilon_number, polynomial_values, section_start, section_end)
-    print("bisection: " + str(bisection_iterations))
+    bisection_iterations: int = bisection_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    print("besection: " + str(bisection_iterations))
 
-    derivative_values: List[int] = [3, 0, -2] #[1, 0, -2, -5]
-    newton_iterations: int = newtons_method.polynomial_epsilon(epsilon_number, input_number, polynomial_values, derivative_values)
-    print("newton: " + str(newton_iterations))
+    #derivative_values: List[int] = [3, 0, -2] #[1, 0, -2, -5]
+    #newton_iterations: int = newtons_method.polynomial_epsilon(epsilon_number, input_number, polynomial_values, derivative_values)
+    #print("newton: " + str(newton_iterations))
 
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
-    pass
+
+    trigonometric_values = trigonometric()
+    print("a: " + str(trigonometric_values.function_type))
+
+    bisection_iterations: int = bisection_method.epsilon(epsilon_number, trigonometric_values, section_start, section_end)
+    print("bisection: " + str(bisection_iterations))
+
+    # NEWTON
 
 
 def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
@@ -401,9 +416,11 @@ def combination_epsilon_search(section_start: float, section_end: float, epsilon
 
 
 # polynomial:
-#  x^3 - 2x - 5, x = 2 
+#  1: x^3 - 2x - 5, x = 2 
 # 
-#  cos(x) + sin(x) + tg(x) - ctg(x), x = 0
+# trigonometric:
+#  1: sin(x) + sin(x/2)
+#  x: cos(x) + sin(x) + tg(x) - ctg(x), x = 0
 #
 
 # 1. Wybór funkcji
@@ -436,7 +453,7 @@ def main():
     section_end = float(input(text_section_end))
     selected_criterion = int(input(text_select_criterion))
 
-    if selected_criterion == limit_iterations:
+    if selected_criterion == limit_epsilon:
         print("Wybrano kryterium [ |x(i) − x(i−1)| < ε ]")
         epsilon: float = 0
         epsilon = float(input("Wprowadź wartość epsilon: "))
@@ -454,7 +471,7 @@ def main():
                 print(text_error_wrong_input)
                 return
 
-    elif selected_criterion == limit_epsilon:
+    elif selected_criterion == limit_iterations:
         print("Wybrano kryterium [ Liczba iteracji ]")
         iteration_number: int = 0
         iteration_number = int(input("Wprowadź liczbę iteracji: "))

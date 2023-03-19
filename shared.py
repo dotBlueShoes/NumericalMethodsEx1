@@ -2,6 +2,11 @@ from typing import List
 
 #def calc_derivative(polynomial: List[int]) -> List[int]:
 
+# 2, 0, 1
+# 2x^2 + 1
+# x(2x) + 1
+
+# x(x(2) + 0*1) + 1
 
 def calc_polynomial_function(polynomial: List[int], x_value: float) -> float:
 	polynomial_degree: int = len(polynomial)
