@@ -16,7 +16,7 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 			return i
 		else:
 			result_start: float = mathematical_function.value(section_start)
-			if (result_start >= 0 and mid_result >= 0) or (result_start < 0 and mid_result < 0): # Check for the same sign
+			if (result_start >= 0.0 and mid_result >= 0.0) or (result_start < 0.0 and mid_result < 0.0): # Check for the same sign
 				section_start = section_mid
 			else:
 				section_end = section_mid

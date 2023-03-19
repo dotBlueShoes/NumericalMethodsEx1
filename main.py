@@ -177,14 +177,14 @@ def mabs(x):
         return x
 
 
-def factorial(x,y):
+def factorial(x, y):
     value:int = 1
     if y%1 == 0: #w zwiazku z zakazem podnoszenia do potęgi całkowitej za pomocą funkcji zastosowaliśmy dane rozwiazanie
         for i in y:
             value = value * x
         return value
     else:
-        return x**y
+        return numpy.float_power(x, y)
 
 
 # Celem zadania pierwszego jest zaimplementowanie i porównanie ze sobą dwóch metod rozwiązywania
@@ -258,11 +258,13 @@ class exponensial:
     def input(self):
         print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
         self.a = input("Podaj wartość a:")
-        self.b = input("Podaj wartość b:")
+        #self.b = input("Podaj wartość b:")
 
-    def value(self, x) -> float:
-        e = numpy.e
-        return self.a * (e ** (self.b * x))
+    def value(self: float, x: int) -> float:
+        #print("complex: " + str(numpy.float_power(self.a, x)))
+        #print("complex: " + str(self.a ** x))
+        return numpy.float_power(self.a, x)
+        #return factorial(self.a, x)
 
 class trigonometric:
     function_type:int = 0
@@ -286,7 +288,7 @@ class trigonometric:
 
 class combination:
     def __init__(self,function1_type:int,function2_type:int):
-        lista: [int] = [1, 1]
+        lista: List[int] = [1, 1]
         function1_type =function1_type
         match function1_type:
             case 1:
@@ -318,7 +320,7 @@ class combination:
             case other:
                 return
     def input(self):
-        lista: [int] = [1, 1]
+        lista: List[int] = [1, 1]
         self.function1_type = int(input(text_select_upper_function))
         match self.function1_type:
             case 1:
@@ -354,76 +356,18 @@ class combination:
     def value(self,x) -> float:
         return self.function1.value(self.function2.value(x))
 
+
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    #polynomial_values: List[int]
-    #input_number: int = 0
 
-    #print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
-
-    # INPUT POLYNOMIAL 
-    #print("Wprowadz stopien wielomianu: ")
-    #input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
-    #polynomial_values = [0] * input_number  # initialize array with 0's.
-
-    # Get a, b, c, d, ... values.
-    #for i in range(0, input_number):
-    #for i in range(input_number - 1, 0 - 1, -1):
-    #    print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
-    #    polynomial_values[input_number - 1 - i] = int(input())
-
-    # Get x value
-    #print("Wprowadz wartosc x: ")
-    #input_number = int(input())
     polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
 
     # BISECTION METHOD
     bisection_iterations: int = bisection_method.iteration(iteration_number, polynomial_values, section_start, section_end)
     print("besection: " + str(bisection_iterations))
 
-    #derivative_values: List[int] = [3, 0, -2] #
-    #newton_iterations: int = newtons_method.polynomial_iteration(iteration_number, input_number, polynomial_values, derivative_values)
-    #print("newton: " + str(newton_iterations))
-
-
-def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    function_type: int = 1 # sin, cos, tg, ctg
-
-    trigonometric_values = trigonometric(function_type)
-    print("a: " + str(trigonometric_values.function_type))
-
-    bisection_iterations: int = bisection_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
-    print("bisection: " + str(bisection_iterations))
-
-    # NEWTON
-
-
-def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    pass
-
-
-def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    pass
-
+    # SECANT METHOD
 
 def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
-    #polynomial_values: List[int]
-    #input_number: int = 0
-
-    #print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
-
-    # INPUT POLYNOMIAL 
-    #print("Wprowadz stopien wielomianu: ")
-    #input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
-    #polynomial_values = [0] * input_number  # initialize array with 0's.
-    # Get a, b, c, d, ... values.
-    #for i in range(0, input_number):
-    #for i in range(input_number - 1, 0 - 1, -1):
-    #    print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
-    #    polynomial_values[input_number - 1 - i] = int(input())
-
-    # Get x value
-    #print("Wprowadz wartosc x: ")
-    #input_number = int(input())
 
     polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
 
@@ -431,27 +375,52 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
     bisection_iterations: int = bisection_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
     print("besection: " + str(bisection_iterations))
 
-    #derivative_values: List[int] = [3, 0, -2] #[1, 0, -2, -5]
-    #newton_iterations: int = newtons_method.polynomial_epsilon(epsilon_number, input_number, polynomial_values, derivative_values)
-    #print("newton: " + str(newton_iterations))
+    # SECANT METHOD
 
+def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
+
+    function_type: int = 1 # sin, cos, tg, ctg
+    trigonometric_values = trigonometric(function_type)
+
+    # BISECTION METHOD
+    bisection_iterations: int = bisection_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
+    print("bisection: " + str(bisection_iterations))
+
+    # SECANT METHOD
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
     function_type: int = 1 # sin, cos, tg, ctg
+    trigonometric_value = trigonometric(function_type)
 
-    trigonometric_values = trigonometric(function_type)
-    print("a: " + str(trigonometric_values.function_type))
-
-    bisection_iterations: int = bisection_method.epsilon(epsilon_number, trigonometric_values, section_start, section_end)
+    # BISECTION METHOD
+    bisection_iterations: int = bisection_method.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
     print("bisection: " + str(bisection_iterations))
 
-    # NEWTON
+    # SECANT METHOD
 
+def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
+
+    exponensial_value = exponensial(-2)
+
+    # BISECTION METHOD
+    exponensial_value: int = bisection_method.iteration(iteration_number, exponensial_value, section_start, section_end)
+    print("bisection: " + str(exponensial_value))
+
+    # SECANT METHOD
 
 def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
-    pass
 
+    exponensial_value = exponensial(numpy.e) #exponensial(-2)
+
+    # BISECTION METHOD
+    exponensial_value: int = bisection_method.epsilon(epsilon_number, exponensial_value, section_start, section_end)
+    print("bisection: " + str(exponensial_value))
+
+    # SECANT METHOD
+
+def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
+    pass
 
 def combination_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
     pass
