@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy
-import statistics as st
 from typing import List
+
+import ploting
 
 import methods.bisection as bisection
 import methods.newtons as newtons
