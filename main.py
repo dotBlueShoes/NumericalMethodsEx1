@@ -221,7 +221,7 @@ def factorial(x):
 
 # TEXTS
 text_section_begin: str = "Podaj wartość reprezentującą początek przedziału: "
-text_section_end: str = "Podaj wartość reprezentującą początek przedziału: "
+text_section_end: str = "Podaj wartość reprezentującą koniec przedziału: "
 text_select_criterion: str = "Wybierz kryterium (1.Spełnienie warunku epsilon  2.Liczba Iteracji): "
 text_select_upper_function: str = "Wybierz funkcję nadrzędną (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza): "
 text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
@@ -304,24 +304,23 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
 
     print("Początek: " + str(section_start) + ", koniec: " + str(section_end))
 
-
     # INPUT POLYNOMIAL 
     print("Wprowadz stopien wielomianu: ")
     input_number = int(input()) + 1         # get polygonal rank - length of the array. +1 because 0 - miejsce zerowe.
     polynomial_values = [0] * input_number  # initialize array with 0's.
 
     # Get a, b, c, d, ... values.
-    for i in range(0, input_number):
-        print("Wprowadz wartosc " + str(i + 1) + " skladnika wielomianu: ")
-        polynomial_values[i] = int(input())
+    #for i in range(0, input_number):
+    for i in range(input_number - 1, 0 - 1, -1):
+        print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
+        polynomial_values[input_number - 1 - i] = int(input())
 
     # Get x value
     print("Wprowadz wartosc x: ")
     input_number = int(input())
 
-
     # BISECTION METHOD
-    bisection_method.iteration(iteration_number, polynomial_values, section_start, section_end)
+    bisection_method.polynomial_iteration(iteration_number, polynomial_values, section_start, section_end)
 
     # CALCULATE POLYNOMIAL
     # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!
@@ -353,9 +352,10 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
     polynomial_values = [0] * input_number  # initialize array with 0's.
 
     # Get a, b, c, d, ... values.
-    for i in range(0, input_number):
-        print("Wprowadz wartosc " + str(i + 1) + " skladnika wielomianu: ")
-        polynomial_values[i] = int(input())
+    #for i in range(0, input_number):
+    for i in range(input_number - 1, 0 - 1, -1):
+        print("Wprowadz wartosc " + str(i) + " skladnika wielomianu: ")
+        polynomial_values[input_number - 1 - i] = int(input())
 
     # Get x value
     print("Wprowadz wartosc x: ")
@@ -363,7 +363,7 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
 
 
     # BISECTION METHOD
-    bisection_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    bisection_method.polynomial_epsilon(epsilon_number, polynomial_values, section_start, section_end)
 
     # CALCULATE POLYNOMIAL
     # result: float = calc_polynomial_function(polynomial_values, input_number) # SCHEMAT HORNERAAAAAAA !!!!

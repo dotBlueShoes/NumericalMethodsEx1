@@ -2,7 +2,7 @@ from typing import List
 from sys import float_info
 import shared
             
-def iteration(iterations: int, polynomial_values: List[int], section_start: float, section_end: float):
+def polynomial_iteration(iterations: int, polynomial_values: List[int], section_start: float, section_end: float):
 	for i in range(iterations):
 
 		section_mid: float = (section_start + section_end) / 2
@@ -24,7 +24,7 @@ def iteration(iterations: int, polynomial_values: List[int], section_start: floa
 
 
 # |x(i) − x(i−1)| < ε
-def epsilon(epsilon: int, polynomial_values: List[int], section_start: float, section_end: float):
+def polynomial_epsilon(epsilon: int, polynomial_values: List[int], section_start: float, section_end: float):
 	
 	section_mid: float = float_info.max
 	prev_section_mid: float = 0
@@ -39,6 +39,7 @@ def epsilon(epsilon: int, polynomial_values: List[int], section_start: float, se
 		#print(str(abs(section_mid - prev_section_mid)))
 
 		mid_result = shared.calc_polynomial_function(polynomial_values, section_mid)
+		#print("mid_result: " + str(mid_result))
 
 		i += 1
 		print("I " + str(i) + ": s/m/e: " +str(section_start) + ", " + str(section_mid) + ", " + str(section_end))
