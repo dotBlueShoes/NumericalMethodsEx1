@@ -14,10 +14,6 @@ class exponensial:
 
     def value(self, x) -> float:
 
-        #print("complex: " + str(numpy.float_power(self.a, x)))
-        #print("complex: " + str(self.a ** x))
-        #return float_power(self.a, x)
-
         if isinstance(self.exponensial_values[0], int):
             if isinstance(x, int):
                 return powii(self.exponensial_values[0], x) + self.exponensial_values[1]

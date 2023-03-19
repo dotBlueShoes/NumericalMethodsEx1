@@ -2,6 +2,7 @@ from typing import List
 import helpers
 
 # Also called Newton-Raphson method
+# Needs a redo.
 
 def polynomial_iteration(
 	iterations: int, 

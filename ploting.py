@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import statistics as stat
 
-
 def plot_function(obj: object, start, end, title: str, zero_place: bool = False, place_zero : float = 0):
     x = []
     y = []

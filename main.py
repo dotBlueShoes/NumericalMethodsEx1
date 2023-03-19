@@ -18,9 +18,9 @@ text_error_wrong_input: str = "Wprowadzono błędny znak nie odpowiadający pole
 text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
 
 # HARDCODED VALUES
-hardcoded_polynomial: List[float] = [1, 0, -2, -5]
+hardcoded_polynomial: List[float] = [1, 0, -2, -5] # 1x^3 -2x^1 -5
 hardcoded_trigonometric: int = 2 # define - sin, cos, tg, ctg
-hardcoded_exponensial: List[float] = [3, -2]
+hardcoded_exponensial: List[float] = [3, -2] # 3^x - 2
 hardcoded_combination: List[int] = [1, 2] # define - wielomian, trygonometryczna, wykładnicza; wielomian, trygonometryczna, wykładnicza, złożona 
 
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
