@@ -6,6 +6,7 @@ from typing import List
 
 import bisection_method
 import newtons_method
+import secant_method
 
 """class Kwiat:
     sepal_length = float
@@ -359,65 +360,91 @@ class combination:
 
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
-    polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
+    polynomial_values = polynomial([1, 0, -2, -5]) 
+    #polynomial_values.input()
+
+    print("\n")
 
     # BISECTION METHOD
     bisection_iterations: int = bisection_method.iteration(iteration_number, polynomial_values, section_start, section_end)
-    print("besection: " + str(bisection_iterations))
+    print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
+    secant_iterations: int = secant_method.iteration(iteration_number, polynomial_values, section_start, section_end)
+    print("secant: " + str(secant_iterations))
+    
 
 def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
     polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
 
+    print("\n")
+
     # BISECTION METHOD
     bisection_iterations: int = bisection_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
-    print("besection: " + str(bisection_iterations))
+    print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
+    secant_iterations: int = secant_method.epsilon(epsilon_number, polynomial_values, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
     function_type: int = 1 # sin, cos, tg, ctg
     trigonometric_values = trigonometric(function_type)
 
+    print("\n")
+
     # BISECTION METHOD
     bisection_iterations: int = bisection_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
-    print("bisection: " + str(bisection_iterations))
+    print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
+    secant_iterations: int = secant_method.iteration(iteration_number, trigonometric_values, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
     function_type: int = 1 # sin, cos, tg, ctg
     trigonometric_value = trigonometric(function_type)
 
+    print("\n")
+
     # BISECTION METHOD
     bisection_iterations: int = bisection_method.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
-    print("bisection: " + str(bisection_iterations))
+    print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
+    secant_iterations: int = secant_method.epsilon(epsilon_number, trigonometric_value, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
     exponensial_value = exponensial(-2)
 
+    print("\n")
+
     # BISECTION METHOD
-    exponensial_value: int = bisection_method.iteration(iteration_number, exponensial_value, section_start, section_end)
-    print("bisection: " + str(exponensial_value))
+    bisection_iterations: int = bisection_method.iteration(iteration_number, exponensial_value, section_start, section_end)
+    print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
+    secant_iterations: int = secant_method.iteration(iteration_number, exponensial_value, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
     exponensial_value = exponensial(numpy.e) #exponensial(-2)
 
+    print("\n")
+
     # BISECTION METHOD
-    exponensial_value: int = bisection_method.epsilon(epsilon_number, exponensial_value, section_start, section_end)
-    print("bisection: " + str(exponensial_value))
+    bisection_iterations: int = bisection_method.epsilon(epsilon_number, exponensial_value, section_start, section_end)
+    print("bisection: " + str(bisection_iterations) + "\n")
 
     # SECANT METHOD
+    secant_iterations: int = secant_method.epsilon(epsilon_number, exponensial_value, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
     pass

@@ -5,13 +5,13 @@ import shared
 
 def polynomial_iteration(
 	iterations: int, 
-	x_value: int, 
-	polynomial_values: List[int], 
-	derivative_values: List[int], 
+	x_value: float, 
+	polynomial_values: List[float], 
+	derivative_values: List[float], 
 ) -> int:
 	
-	previous: int = x_value
-	current: int = 0
+	previous: float = x_value
+	current: float = 0
 	i: int = 0
 
 	for i in range(iterations):
@@ -25,14 +25,14 @@ def polynomial_iteration(
 	return i
 
 def polynomial_epsilon(
-	epsilon: int, 
-	x_value: int, 
-	polynomial_values: List[int], 
-	derivative_values: List[int], 
+	epsilon: float, 
+	x_value: float, 
+	polynomial_values: List[float], 
+	derivative_values: List[float], 
 ) -> int:
 	
-	current: int = x_value
-	previous: int = 0
+	current: float = x_value
+	previous: float = 0
 	i: int = 0
 
 	while epsilon < abs(current - previous):

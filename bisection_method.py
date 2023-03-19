@@ -24,7 +24,7 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 
 
 # |x(i) − x(i−1)| < ε
-def epsilon(epsilon: int, mathematical_function: object, section_start: float, section_end: float) -> int:
+def epsilon(epsilon: float, mathematical_function: object, section_start: float, section_end: float) -> int:
 	
 	section_mid: float = float_info.max
 	prev_section_mid: float = 0
