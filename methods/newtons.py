@@ -1,5 +1,5 @@
 from typing import List
-import shared
+import helpers
 
 # Also called Newton-Raphson method
 
@@ -16,8 +16,8 @@ def polynomial_iteration(
 
 	for i in range(iterations):
 		current = previous - (
-			shared.calc_polynomial_function(polynomial_values, previous) / 
-			shared.calc_polynomial_function(derivative_values, previous)
+			helpers.calc_polynomial_function(polynomial_values, previous) / 
+			helpers.calc_polynomial_function(derivative_values, previous)
 		)
 		previous = current
 		print("I " + str(i + 1) + ": 0: " + str(previous))
@@ -40,8 +40,8 @@ def polynomial_epsilon(
 
 		previous = current
 		current = previous - (
-			shared.calc_polynomial_function(polynomial_values, previous) / 
-			shared.calc_polynomial_function(derivative_values, previous)
+			helpers.calc_polynomial_function(polynomial_values, previous) / 
+			helpers.calc_polynomial_function(derivative_values, previous)
 		)
 		
 		print("I " + str(i + 1) + ": 0: " + str(current))

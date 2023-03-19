@@ -8,7 +8,7 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 	prev_prev_calculation: float
 	prev_calculation: float
 
-	current: float
+	current: float = 0
 	i: int = 0
 	
 	for i in range(iterations):	
@@ -18,8 +18,8 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 
 		denominator: float = (prev_calculation - prev_prev_calculation)
 		if (denominator == 0.0):
-			print("Mianownik wynosi '0' przerwanie iteracji !")
-			ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych',True,current)
+			print("Mianownik wynosi '0' przerwanie iteracji ! [ Dla cos(x) przedział nie może być równy np. -5, 5]")
+			ploting.plot_function(mathematical_function, section_start, section_end, 'Metoda siecznych', True, current)
 			return i
 
 		current = prev_value - (
@@ -27,18 +27,19 @@ def iteration(iterations: int, mathematical_function: object, section_start: flo
 			denominator
 		)
 
+		print("I " + str(i + 1) + ": pp/p/c: " + str(prev_prev_value) + ", " + str(prev_value) + ", " + str(current))
+
 		prev_prev_value = prev_value
 		prev_value = current
 
-		print("I " + str(i + 1) + ": pp/p/c: " + str(prev_prev_value) + ", " + str(prev_value) + ", " + str(current))
-	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych')
+	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych', True, current)
 	return i
 
 def epsilon(epsilon: float, mathematical_function: object, section_start: float, section_end: float) -> int:
 	
 	prev_prev_value: float = section_start
 	prev_value: float = section_end
-	current: float = section_start
+	current: float = 0
 
 	prev_prev_calculation: float
 	prev_calculation: float
@@ -53,8 +54,8 @@ def epsilon(epsilon: float, mathematical_function: object, section_start: float,
 
 		denominator: float = (prev_calculation - prev_prev_calculation)
 		if (denominator == 0.0):
-			print("Mianownik wynosi '0' przerwanie iteracji !")
-			ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych',True,current)
+			print("Mianownik wynosi '0' przerwanie iteracji ! [ Dla cos(x) przedział nie może być równy np. -5, 5]")
+			ploting.plot_function(mathematical_function, section_start, section_end, 'Metoda siecznych',True , current)
 			return i
 
 		current = prev_value - (
@@ -62,10 +63,10 @@ def epsilon(epsilon: float, mathematical_function: object, section_start: float,
 			denominator
 		)
 
+		print("I " + str(i) + ": pp/p/c: " + str(prev_prev_value) + ", " + str(prev_value) + ", " + str(current))
+
 		prev_prev_value = prev_value
 		prev_value = current
 
-		print("I " + str(i + 1) + ": pp/p/c: " + str(prev_prev_value) + ", " + str(prev_value) + ", " + str(current))
-
-	ploting.plot_function(mathematical_function, section_start, section_end,'Metoda siecznych')
+	ploting.plot_function(mathematical_function, section_start, section_end, 'Metoda siecznych', True , current)
 	return i

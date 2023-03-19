@@ -1,19 +1,31 @@
 from numpy import float_power
+from typing import List
+from helpers import powii, powfi, powff
 
 class exponensial:
-    a = float
-    #b = float
-    def __init__(self, a):
-        self.a = a
-        #self.b = b
+    exponensial_values: List[int]
+    def __init__(self, exponensial_values:  List[int]):
+        self.exponensial_values = exponensial_values
 
     def input(self):
-        print("Funkcja wykładnicza ma postać f(x)=a*e^(bx)")
-        self.a = input("Podaj wartość a:")
-        #self.b = input("Podaj wartość b:")
+        print("Funkcja wykładnicza ma postać f(x)=a^x+b")
+        self.exponensial_values[0] = float(input("Podaj wartość a: "))
+        self.exponensial_values[1] = float(input("Podaj wartość b: "))
 
-    def value(self: float, x: float) -> float:
+    def value(self, x) -> float:
+
         #print("complex: " + str(numpy.float_power(self.a, x)))
         #print("complex: " + str(self.a ** x))
-        return float_power(self.a, x)
-        #return factorial(self.a, x)
+        #return float_power(self.a, x)
+
+        if isinstance(self.exponensial_values[0], int):
+            if isinstance(x, int):
+                return powii(self.exponensial_values[0], x) + self.exponensial_values[1]
+            else:
+                return powff(self.exponensial_values[0], x) + self.exponensial_values[1]
+        else:
+            if isinstance(x, float):
+                return powff(self.exponensial_values[0], x) + self.exponensial_values[1]
+            else:
+                return powfi(self.exponensial_values[0], x) + self.exponensial_values[1]
+        

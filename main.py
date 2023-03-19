@@ -1,194 +1,14 @@
 import numpy
 from typing import List
 
+from functions.trigonometric import trigonometric
+from functions.exponensial import exponensial
+from functions.polynomial import polynomial
+from functions.combination import combination
 
 import methods.bisection as bisection
 import methods.newtons as newtons
 import methods.secant as secant
-
-
-from functions.trigonometric import trigonometric
-from functions.exponensial import exponensial
-from functions.polynomial import polynomial
-
-"""class Kwiat:
-    sepal_length = float
-    sepal_width = float
-    petal_length = float
-    petal_width = float
-
-    def print_stat(self):
-        print(f"{self.sepal_length}; {self.sepal_width}; {self.petal_length}; {self.petal_width}")
-
-
-def tab1(nazwa: str, liczba: int, cala_liczba: int):
-    procent = round(liczba / cala_liczba * 100, 1)
-    print(f"{nazwa}: liczebność: {liczba}({procent}%)")
-
-
-def tab2(lista1, lista2, lista3, liczebnosc):
-    sepal_length = []
-    sepal_width = []
-    petal_length = []
-    petal_width = []
-    for kwiat in lista1:
-        sepal_length.append(kwiat.sepal_length)
-        sepal_width.append(kwiat.sepal_width)
-        petal_length.append(kwiat.petal_length)
-        petal_width.append(kwiat.petal_width)
-    for kwiat in lista2:
-        sepal_length.append(kwiat.sepal_length)
-        sepal_width.append(kwiat.sepal_width)
-        petal_length.append(kwiat.petal_length)
-        petal_width.append(kwiat.petal_width)
-    for kwiat in lista3:
-        sepal_length.append(kwiat.sepal_length)
-        sepal_width.append(kwiat.sepal_width)
-        petal_length.append(kwiat.petal_length)
-        petal_width.append(kwiat.petal_width)
-
-    wyswietl("Długość działki kielicha (cm)", sepal_length, liczebnosc)
-    wyswietl("Szerokość działki kielicha (cm)", sepal_width, liczebnosc)
-    wyswietl("Długość płatka (cm)", petal_length, liczebnosc)
-    wyswietl("Szerokość płatka (cm)", petal_width, liczebnosc)
-
-
-def wyswietl(nazwa, tab, licz):
-    print(
-        f"{nazwa}: Minimum:{min(tab)} średnia:{srednia(tab, licz)} (±{odchylenie(tab, licz)}) Mediana:{round(st.median(tab), 2)} ({kwartyl_dolny(tab, licz)}-{kwartyl_gorny(tab, licz)}) Maksimum:{max(tab)}")
-
-
-def srednia(tablica, liczebnosc):
-    return round(sum(tablica) / liczebnosc, 2)
-
-
-def odchylenie(tablica, liczebnosc):
-    suma = 0
-    for wartosc in tablica:
-        suma = suma + (wartosc - srednia(tablica, liczebnosc)) ** 2
-    return round(numpy.sqrt(suma / liczebnosc), 2)
-
-
-def kwartyl_dolny(tablica, liczenosc):
-    tablica.sort()
-    return tablica[int((liczenosc - 1) / 4)]
-
-
-def kwartyl_gorny(tablica, liczenosc):
-    tablica.sort()
-    return tablica[int(((liczenosc - 1) * 3) / 4)]
-
-
-def wykresy(lista1, lista2, lista3):
-    sepal_length = []
-    sepal_width = []
-    petal_length = []
-    petal_width = []
-    for kwiat in lista1:
-        sepal_length.append(kwiat.sepal_length)
-        sepal_width.append(kwiat.sepal_width)
-        petal_length.append(kwiat.petal_length)
-        petal_width.append(kwiat.petal_width)
-    for kwiat in lista2:
-        sepal_length.append(kwiat.sepal_length)
-        sepal_width.append(kwiat.sepal_width)
-        petal_length.append(kwiat.petal_length)
-        petal_width.append(kwiat.petal_width)
-    for kwiat in lista3:
-        sepal_length.append(kwiat.sepal_length)
-        sepal_width.append(kwiat.sepal_width)
-        petal_length.append(kwiat.petal_length)
-        petal_width.append(kwiat.petal_width)
-    histogram("Długość działki kielicha", sepal_length)
-    histogram("Szerokość działki kielicha", sepal_width)
-    histogram("Długość płatka", petal_length)
-    histogram("Szerokość płatka", petal_width)
-
-
-def histogram(nazwa, tab):
-    nniz = 0
-    if (min(tab) < int(min(tab)) + 0.5):
-        nniz = int(min(tab))
-    else:
-        nniz = int(min(tab)) + 0.5
-    nmaks = 0
-    if (max(tab) < int(max(tab)) + 0.5):
-        nmaks = int(max(tab)) + 1
-    else:
-        nmaks = int(max(tab)) + 1.5
-
-    bins = numpy.arange(nniz, nmaks, 0.5)
-    plt.hist(tab, bins=bins, edgecolor='black')
-    plt.title(nazwa)
-    plt.ylabel("Liczebność")
-    plt.xlabel("Długość (cm)")
-    plt.show()
-
-
-def wyk_pudelkowy(lista1, lista2, lista3):
-    sepal_length_s = []
-    sepal_length_ve = []
-    sepal_length_vi = []
-
-    sepal_width_s = []
-    sepal_width_ve = []
-    sepal_width_vi = []
-
-    petal_length_s = []
-    petal_length_ve = []
-    petal_length_vi = []
-
-    petal_width_s = []
-    petal_width_ve = []
-    petal_width_vi = []
-    for kwiat in lista1:
-        sepal_length_s.append(kwiat.sepal_length)
-        sepal_width_s.append(kwiat.sepal_width)
-        petal_length_s.append(kwiat.petal_length)
-        petal_width_s.append(kwiat.petal_width)
-    for kwiat in lista2:
-        sepal_length_ve.append(kwiat.sepal_length)
-        sepal_width_ve.append(kwiat.sepal_width)
-        petal_length_ve.append(kwiat.petal_length)
-        petal_width_ve.append(kwiat.petal_width)
-    for kwiat in lista3:
-        sepal_length_vi.append(kwiat.sepal_length)
-        sepal_width_vi.append(kwiat.sepal_width)
-        petal_length_vi.append(kwiat.petal_length)
-        petal_width_vi.append(kwiat.petal_width)
-    plt.boxplot([sepal_length_s, sepal_length_ve, sepal_length_vi], labels=['setosa', 'versicolor', 'virginica'])
-    plt.ylabel('Długość (cm)')
-    plt.show()
-    plt.boxplot([sepal_width_s, sepal_width_ve, sepal_width_vi], labels=['setosa', 'versicolor', 'virginica'])
-    plt.ylabel('Szerokość (cm)')
-    plt.show()
-    plt.boxplot([petal_length_s, petal_length_ve, petal_length_vi], labels=['setosa', 'versicolor', 'virginica'])
-    plt.ylabel('Długość (cm)')
-    plt.show()
-    plt.boxplot([petal_width_s, petal_width_ve, petal_width_vi], labels=['setosa', 'versicolor', 'virginica'])
-    plt.ylabel('Szerokość (cm)')
-    plt.show()"""
-
-def value_exponential_fuction(a, b, x):
-    e = numpy.e
-    return a * (e ** (b * x))
-
-
-def mabs(x):
-    if x < 0:
-        return x*(-1)
-    else:
-        return x
-
-
-def factorial(x, y):
-    value:int = 1
-    if y%1 == 0: # W zwiazku z zakazem podnoszenia do potęgi całkowitej za pomocą funkcji zastosowaliśmy dane rozwiazanie
-        for i in y:
-            value = value * x
-        return value
-    else:
-        return numpy.float_power(x, y)
 
 # TEXTS
 text_section_begin: str = "Podaj wartość reprezentującą początek przedziału: "
@@ -197,10 +17,15 @@ text_select_criterion: str = "Wybierz kryterium (1.Spełnienie warunku epsilon  
 text_error_wrong_input: str = "Wprowadzono błędny znak nie odpowiadający poleceniu!"
 text_select_function: str = "Wybierz funkcję (1.Wielomian, 2.Trygonometryczna, 3.Wykładnicza, 4.Złożona): "
 
+# HARDCODED VALUES
+hardcoded_polynomial: List[float] = [1, 0, -2, -5]
+hardcoded_trigonometric: int = 2 # define - sin, cos, tg, ctg
+hardcoded_exponensial: List[float] = [3, -2]
+hardcoded_combination: List[int] = [1, 2] # define - wielomian, trygonometryczna, wykładnicza; wielomian, trygonometryczna, wykładnicza, złożona 
+
 def polynomial_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
-    polynomial_values = polynomial([1, 0, -2, -5]) 
-    #polynomial_values.input()
+    polynomial_values = polynomial(hardcoded_polynomial) 
 
     print("\n")
 
@@ -215,7 +40,7 @@ def polynomial_iteration_search(section_start: float, section_end: float, iterat
 
 def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
-    polynomial_values = polynomial([1, 0, -2, -5]) #polynomial_values.input()
+    polynomial_values = polynomial(hardcoded_polynomial)
 
     print("\n")
 
@@ -229,8 +54,7 @@ def polynomial_epsilon_search(section_start: float, section_end: float, epsilon_
 
 def trigonometric_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
-    function_type: int = 1 # sin, cos, tg, ctg
-    trigonometric_values = trigonometric(function_type)
+    trigonometric_values = trigonometric(hardcoded_trigonometric)
 
     print("\n")
 
@@ -244,8 +68,7 @@ def trigonometric_iteration_search(section_start: float, section_end: float, ite
 
 def trigonometric_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
-    function_type: int = 1 # sin, cos, tg, ctg
-    trigonometric_value = trigonometric(function_type)
+    trigonometric_value = trigonometric(hardcoded_trigonometric)
 
     print("\n")
 
@@ -259,7 +82,7 @@ def trigonometric_epsilon_search(section_start: float, section_end: float, epsil
 
 def exponensial_iteration_search(section_start: float, section_end: float, iteration_number: float):
 
-    exponensial_value = exponensial(-2)
+    exponensial_value = exponensial(hardcoded_exponensial)
 
     print("\n")
 
@@ -273,7 +96,7 @@ def exponensial_iteration_search(section_start: float, section_end: float, itera
 
 def exponensial_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
 
-    exponensial_value = exponensial(numpy.e) #exponensial(-2)
+    exponensial_value = exponensial(hardcoded_exponensial)
 
     print("\n")
 
@@ -286,23 +109,37 @@ def exponensial_epsilon_search(section_start: float, section_end: float, epsilon
     print("secant: " + str(secant_iterations))
 
 def combination_iteration_search(section_start: float, section_end: float, iteration_number: float):
-    pass
+
+    combination_value = combination(hardcoded_combination)
+
+    print("\n")
+
+    # BISECTION METHOD
+    bisection_iterations: int = bisection.iteration(iteration_number, combination_value, section_start, section_end)
+    print("bisection: " + str(bisection_iterations) + "\n")
+
+    # SECANT METHOD
+    secant_iterations: int = secant.iteration(iteration_number, combination_value, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 def combination_epsilon_search(section_start: float, section_end: float, epsilon_number: int):
-    pass
 
+    combination_value = combination(hardcoded_combination)
 
-# polynomial:
-#  1: x^3 - 2x - 5, x = 2 
-# 
-# trigonometric:
-#  1: sin(x) + sin(x/2)
-#  x: cos(x) + sin(x) + tg(x) - ctg(x), x = 0
-#
+    print("\n")
+
+    # BISECTION METHOD
+    bisection_iterations: int = bisection.epsilon(epsilon_number, combination_value, section_start, section_end)
+    print("bisection: " + str(bisection_iterations) + "\n")
+
+    # SECANT METHOD
+    secant_iterations: int = secant.epsilon(epsilon_number, combination_value, section_start, section_end)
+    print("secant: " + str(secant_iterations))
 
 # 1. Wybór funkcji
-# 2. Wybiera przedział A-B
+# 2. Wybiera przedział A - B
 # 3. Wybiera kryterium a, b
+
 def main():
 
     limit_iterations: int = 2
